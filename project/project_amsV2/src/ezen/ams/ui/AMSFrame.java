@@ -268,9 +268,9 @@ public class AMSFrame extends Frame {
 		if (accountNum != null) {
 			removeOk = AMSui.repository.removeAccout(accountNum);
 			if (removeOk) {
-				JOptionPane.showMessageDialog(this, "정상 삭제 처리되었습니다.");
+				JOptionPane.showMessageDialog(this, "정상 삭제 처리되었습니다");
 			} else {
-				JOptionPane.showMessageDialog(this, "계좌번호를 확인해주시기 바랍니다.");
+				JOptionPane.showMessageDialog(this, "계좌번호를 확인해주시기 바랍니다");
 			}
 		} 
 		printReset();
@@ -282,14 +282,14 @@ public class AMSFrame extends Frame {
 		Account seachAccount = AMSui.repository.searchAccount(accountNum);
 		
 		printHeader();
-				if (seachAccount instanceof MinusAccount) {
-					accountList.append("마이너스계좌     "+seachAccount+"\n");
-					printReset();
-				}
-				else {
-					accountList.append("   입출금계좌     "+seachAccount+"\n");
-					printReset();
-				}
+			if (seachAccount instanceof MinusAccount) {
+				accountList.append("마이너스계좌     "+seachAccount+"\n");
+				printReset();
+			}
+			else {
+				accountList.append("   입출금계좌     "+seachAccount+"\n");
+				printReset();
+			}
 		}
 	
 //	예금주명으로 조회기능
@@ -310,11 +310,6 @@ public class AMSFrame extends Frame {
 	}
 	
 	public void addAccount() {
-//		계좌번호는 자동 생성하기 때문에 입력 받지 않아도 됨
-//		String accountNum = accNumTF.getText();
-//		if(!Validator.hasText(accountNum)) {
-//			accNumTF.setText("계좌번호 입력혀라...");
-//		}
 		
 		// 편의상 정상 입력되었다 가정
 		String accountOwner = accountOwnerTF.getText();
@@ -339,7 +334,7 @@ public class AMSFrame extends Frame {
 			}
 		}
 		AMSui.repository.addAccount(account);
-		JOptionPane.showMessageDialog(this, "정상 등록 처리되었습니다.");
+		JOptionPane.showMessageDialog(this, "정상 등록 처리되었습니다");
 		printReset();
 	}
 }
