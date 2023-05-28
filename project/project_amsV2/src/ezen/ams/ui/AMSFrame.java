@@ -106,6 +106,7 @@ public class AMSFrame extends Frame {
 			accountType.add(accountT.getName());
 		}
 		
+		addEventListner();
 		pack();
 		setVisible(true);
 	}
@@ -123,51 +124,77 @@ public class AMSFrame extends Frame {
 		add(c);
 	}
 	
+//	버튼이 눌렸을때 이벤트
 	public void addEventListner() {
 		class ActionHandler implements ActionListener{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Object eventSource = e.getSource();
-				if(eventSource == accountSetB) {
+				if(eventSource == accountSetB) {			//계좌등록
 					addAccount();
-				} else if(eventSource == printInfoB) {
+				} else if(eventSource == printInfoB) {		//전체계좌 출력
 					allList();
+				} else if(eventSource == checkB) {			//계좌번호로 조회
+					seachAccount();
+				} else if(eventSource == delteB) {			//계좌 삭제
+					removeAccount();
+				} else if(eventSource == seachB) {			//예금주명으로 조회
+					seachOwner();
 				}
 			}
 		}
-		ActionListener actionListener = new ActionHandler();
 		
+//		윈도우창 관련 이벤트
 		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowOpened(WindowEvent e) {				//윈도우 창이 열렸을 때
+				allList();
+				printReset();
+				borrowMoneyTF.setEnabled(false);
+				inputMoneyTF.setEnabled(false);
+				passwdTF.setEnabled(false);
+			}
+			
 			@Override
 			public void windowClosing(WindowEvent e) {				//윈도우 x키 눌렀을때 닫히는 메소드
 				exit();
 			}
-			
-			@Override
-	        public void windowOpened(WindowEvent e) {
-	            System.out.println("opeeeeeen");
-	        }
 		});
 		
+//		액션리스너 생성 후 버튼이 눌렸을때 이벤트 생성 연결
+		ActionListener actionListener = new ActionHandler();
 		
 // 계좌 등록
 		accountSetB.addActionListener(actionListener);
-// 계좌 선택
-		accountType.addItemListener(new ItemListener() {
-		@Override
-		public void itemStateChanged(ItemEvent e) {
-			if(e.getStateChange() == ItemEvent.SELECTED) {
-				if(accountType.getSelectedItem().equals("입출금계좌")) {
-					selectAccountType(AccountType.GENERAL_ACCOUNT);					
-				}					
-			}
-			
-		}
-	});
-
+		
+// 계좌번호로 조회
+		checkB.addActionListener(actionListener);
+		
 // 전체계좌 조회
 		printInfoB.addActionListener(actionListener);
+		
+// 계좌 삭제
+		delteB.addActionListener(actionListener);
+		
+// 예금주명으로 조회
+		seachB.addActionListener(actionListener);
+
+// 계좌 선택
+		accountType.addItemListener(new ItemListener() {
+			@Override
+			public void itemStateChanged(ItemEvent e) {
+				if(e.getStateChange() == ItemEvent.SELECTED) {
+					if(accountType.getSelectedItem().equals("입출금계좌")) {
+						selectAccountType(AccountType.GENERAL_ACCOUNT);
+					} else if(accountType.getSelectedItem().equals("마이너스계좌")) {
+						selectAccountType(AccountType.MINUS_ACCOUNT);					
+					} else if(accountType.getSelectedItem().equals("전체 계좌")) {
+						selectAccountType(AccountType.ALL_ACCOUNT);					
+					}
+				}
 				
+			}
+		});
 	}
 
 	public void exit() {
@@ -176,37 +203,113 @@ public class AMSFrame extends Frame {
 		System.exit(0);
 	}
 	
+//	전체 계좌 출력하는 메소드
 	public void allList() {
-		System.out.println("open");
 		accountList.setText("");
 		printHeader();
 		List<Account> list = AMSui.repository.getAccounts();
 		for (Account account : list) {
-			accountList.append(account.toString() + "\n");
+			if (account instanceof MinusAccount) {
+				accountList.append("마이너스계좌     "+account.toString() + "\n");
+			} else if(account instanceof Account) {
+				accountList.append("   입출금계좌     "+account.toString() + "\n");
+			}
 		}
+		
 	}
 	
-//	계좌 타입을 선택했을때
+//	계좌 타입을 선택했을때 입력 금지 설정
 	public void selectAccountType(AccountType accountType) {
 		switch (accountType) {
 		case GENERAL_ACCOUNT:
-			borrowMoneyTF.setEnabled(false); break;
+			borrowMoneyTF.setEnabled(false);
+			inputMoneyTF.setEnabled(true);
+			passwdTF.setEnabled(true);
+			printReset();
+			break;
 		case ALL_ACCOUNT:
-			borrowMoneyTF.setEnabled(false); break;
+			borrowMoneyTF.setEnabled(false);
+			inputMoneyTF.setEnabled(false);
+			passwdTF.setEnabled(false);
+			printReset();
+			break;
 		case MINUS_ACCOUNT:
-			borrowMoneyTF.setEnabled(true); break;
+			borrowMoneyTF.setEnabled(true); 
+			inputMoneyTF.setEnabled(true);
+			passwdTF.setEnabled(true);
+			printReset();
+			break;
 		}
 		
 	}
 	
+//	계좌 선택시 입력창 초기화 해주는 메소드
+	private void printReset() {
+		accountNumTF.setText("조회 시에 입력해주세요");
+		accountOwnerTF.setText("");
+		borrowMoneyTF.setText("");
+		inputMoneyTF.setText("");
+		passwdTF.setText("");
+	}
+	
 	private void printHeader() {
-		accountList.append("---------------------------------------------\n");
-		accountList.append("계좌번호 예금주 비밀번호  잔액 대출금액\n");
-		accountList.append("=============================================\n");
+		accountList.setText("");
+		accountList.append("--------------------------------------------------------------------\n");
+		accountList.append("     계좌종류   계좌번호   예금주    비밀번호       잔액           대출금액\n");
+		accountList.append("====================================================================\n");
+	}
+	
+//	계좌 삭제 기능
+	public void removeAccount() {
+		// 편의상 정상 입력되었다 가정
+		String accountNum = accountNumTF.getText();
+		boolean removeOk;
+		
+		if (accountNum != null) {
+			removeOk = AMSui.repository.removeAccout(accountNum);
+			if (removeOk) {
+				JOptionPane.showMessageDialog(this, "정상 삭제 처리되었습니다.");
+			} else {
+				JOptionPane.showMessageDialog(this, "계좌번호를 확인해주시기 바랍니다.");
+			}
+		} 
+		printReset();
+	}
+	
+//	계좌번호로 조회 기능
+	public void seachAccount() {
+		String accountNum = accountNumTF.getText();
+		Account seachAccount = AMSui.repository.searchAccount(accountNum);
+		
+		printHeader();
+				if (seachAccount instanceof MinusAccount) {
+					accountList.append("마이너스계좌     "+seachAccount+"\n");
+					printReset();
+				}
+				else {
+					accountList.append("   입출금계좌     "+seachAccount+"\n");
+					printReset();
+				}
+		}
+	
+//	예금주명으로 조회기능
+	public void seachOwner() {
+		String accountOwner = accountOwnerTF.getText();
+		List<Account> list = AMSui.repository.searchAccountByOwner(accountOwner);
+		printHeader();
+		for (Account account : list) {
+			if (account instanceof MinusAccount) {
+				accountList.append("마이너스계좌     "+account+"\n");
+				printReset();
+			}
+			else {
+				accountList.append("   입출금계좌     "+account+"\n");
+				printReset();
+			}
+		}
 	}
 	
 	public void addAccount() {
-		
 //		계좌번호는 자동 생성하기 때문에 입력 받지 않아도 됨
 //		String accountNum = accNumTF.getText();
 //		if(!Validator.hasText(accountNum)) {
@@ -218,7 +321,8 @@ public class AMSFrame extends Frame {
 		int password =Integer.parseInt(passwdTF.getText());
 		long inputMoney = Long.parseLong(inputMoneyTF.getText());
 		
-		String selectedItem = accountList.getSelectedText();
+		String selectedItem = accountType.getSelectedItem();
+		
 		// 입출금 계좌 등록
 		if(selectedItem.equals(AccountType.GENERAL_ACCOUNT.getName())) {
 			try {
@@ -234,9 +338,8 @@ public class AMSFrame extends Frame {
 				e.printStackTrace();
 			}
 		}
-		
 		AMSui.repository.addAccount(account);
-//		System.out.println("ADD Compliete!!!");
 		JOptionPane.showMessageDialog(this, "정상 등록 처리되었습니다.");
+		printReset();
 	}
 }

@@ -41,7 +41,7 @@ public class MinusAccount extends Account{
 		}
 	@Override
 	public String toString() {
-		return super.toString()+"\t"+borrowMoney;
+		return super.toString()+"   "+borrowMoney;
 	}
 	
 	

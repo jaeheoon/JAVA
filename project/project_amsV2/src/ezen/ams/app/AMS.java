@@ -4,15 +4,15 @@ import java.util.List;
 import java.util.Scanner;
 
 import ezen.ams.domain.Account;
-import ezen.ams.domain.AccountRepository;
-import ezen.ams.domain.MemoryAccountRepository;
+import ezen.ams.domain.AccountRepository2;
+import ezen.ams.domain.MemoryAccountRepository2;
 import ezen.ams.domain.MinusAccount;
 import ezen.ams.exception.NotBalanceException;
 
 public class AMS {
 	
-	private static AccountRepository repository = new MemoryAccountRepository();
-	private static AccountRepository mirepository = new MemoryAccountRepository();
+	private static AccountRepository2 repository = new MemoryAccountRepository2();
+	private static AccountRepository2 mirepository = new MemoryAccountRepository2();
 	private static Account accounts;
 	private static MinusAccount miAccount;
 	private static Scanner scanner = new Scanner(System.in);
@@ -177,9 +177,9 @@ public class AMS {
 		 * 입출금계좌 목록 출력
 		 */
 		private static void printAccounts()	{
-			List<Account> list = repository.getAccounts();
+			Account[] list = repository.getAccounts();
 			for (int i = 0; i < repository.getCount(); i++) {
-//				list[i].printInfo();			
+			list[i].printInfo();			
 			}
 		}
 		
@@ -222,7 +222,7 @@ public class AMS {
 			if(miAccount!=null) {
 				System.out.print("입금할 금액을 입력하세요: ");
 				long addMoney = Long.parseLong(scanner.nextLine());
-//			MinusAccount miAccount = (MinusAccount)accounts;
+				MinusAccount miAccount = (MinusAccount)accounts;	
 				long addRestMoney= 0;
 				try {
 					addRestMoney = miAccount.deposit(addMoney);
@@ -274,9 +274,9 @@ public class AMS {
 		 * 마이너스 계좌 목록 출력
 		 */
 		private static void printMiAccounts()	{
-			List<Account> list = mirepository.getAccounts();
+			Account[] list = mirepository.getAccounts();
 			for (int i = 0; i < mirepository.getCount(); i++) {
-//			list[i].printInfo();			
+			System.out.println(list[i]);			
 			}
 		}
 		/**

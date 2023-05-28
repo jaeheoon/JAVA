@@ -137,14 +137,13 @@ public class Account {
 	
 //	모든 정보 출력하는 코드
 	public void printInfo() {
-		System.out.println(accountNum+"\t"+accountOwner+"\t******\t"+ getRestMoney());
+		System.out.println(accountNum+"       "+accountOwner+"       ******       "+ getRestMoney());
 	}
-	
 	
 	@Override
 	public String toString() {
 //	의미있게끔 값을 변경해 준 함수
-	return accountNum+"\t"+accountOwner+"\t******\t"+ restMoney;
+	return accountNum+"      "+accountOwner+"      ******      "+ restMoney;
 //	기본 Overriding을 하면 나오는 함수
 //		return "Account [accountNum=" + accountNum + ", accountOwner=" + accountOwner + ", passwd=" + passwd
 //				+ ", restMoney=" + restMoney + "]";

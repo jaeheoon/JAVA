@@ -13,7 +13,6 @@ public class AMSui {
 	public static void main(String[] args) throws NotBalanceException {
 		AMSFrame amsFrame = new AMSFrame("EZEN-BANK AMS");
 		amsFrame.setSize(600, 500);
-		amsFrame.addEventListner();
 		amsFrame.setResizable(true);			//창 크기 조절 못하게끔 하는 코드
 		
 //		임시 더미데이터 입력

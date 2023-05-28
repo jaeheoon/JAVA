@@ -39,12 +39,11 @@ public class MinusAccount extends Account{
 //	필요에 따라 부모클래스로부터 받은 메소드를 재정의(Overriding)할 수 있다
 	@Override
 		public long getRestMoney() {
-			
 			return super.getRestMoney() - borrowMoney;
 		}
 	@Override
 	public String toString() {
-		return super.toString()+"\t"+borrowMoney;
+		return super.toString()+"         "+borrowMoney;
 	}
 	
 	

@@ -1,22 +1,20 @@
 package ezen.ams.domain;
 
-import java.util.List;
-
 /**
  * 메모리(배열)를 통해 은행계좌 목록 저장 및 관리(검색, 수정, 삭제) 구현체
  * @author 홍재헌
  * @since 1.0
  */
-public class MemoryAccountRepository implements AccountRepository{
+public class MemoryAccountRepository2 implements AccountRepository2{
 	
 	private Account[] accounts;
 	private int count;
 	
-	public MemoryAccountRepository() {
+	public MemoryAccountRepository2() {
 		this(100);
 	}
 	
-	public MemoryAccountRepository(int capacity) {
+	public MemoryAccountRepository2(int capacity) {
 		this.accounts = new Account[capacity];
 	}
 	
@@ -31,9 +29,9 @@ public class MemoryAccountRepository implements AccountRepository{
 	 * 
 	 * @return 전체계좌 목록
 	 */
-//	public List<Account> getAccounts() {
-//		return accounts;
-//	}
+	public Account[] getAccounts() {
+		return accounts;
+	}
 	
 	/**
 	 * 신규계좌 등록
@@ -67,21 +65,21 @@ public class MemoryAccountRepository implements AccountRepository{
 	 * @param accountOwner 검색 예금주명
 	 * @return 검색된 계좌목록
 	 */
-	public List<Account> searchAccountByOwner(String accountOwner) {
-		List<Account> searchList = null;
+	public Account[] searchAccountByOwner(String accountOwner) {
+		Account[] searchList = null;
 		
 		int searchCount = getCountByOwner(accountOwner);
 		if(searchCount == 0) {
 			return null;
 		}
 		
-//		searchList = new Account[searchCount];
-//		int listIndex = 0;
-//		for (int i = 0; i < count; i++) {
-//			if(accounts[i].getAccountOwner().equals(accountOwner)) {
-//				searchList[listIndex++] = accounts[i];
-//			}
-//		}
+		searchList = new Account[searchCount];
+		int listIndex = 0;
+		for (int i = 0; i < count; i++) {
+			if(accounts[i].getAccountOwner().equals(accountOwner)) {
+				searchList[listIndex++] = accounts[i];
+			}
+		}
 		return searchList;
 	}
 	
@@ -112,11 +110,6 @@ public class MemoryAccountRepository implements AccountRepository{
 			}
 		}
 		return false;
-	}
-
-	@Override
-	public List<Account> getAccounts() {
-		return null;
 	}
 }
 

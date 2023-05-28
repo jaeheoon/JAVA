@@ -1,7 +1,5 @@
 package Test;
-/**
- * 깃 테스트입니다.
- */
+
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dialog;

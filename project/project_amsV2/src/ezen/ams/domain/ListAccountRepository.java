@@ -137,10 +137,6 @@ public class ListAccountRepository implements AccountRepository{
 		return false;
 	}
 	
-	
-	
-	
-	
 }
 
 	
