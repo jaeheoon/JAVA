@@ -2,7 +2,6 @@ package Test;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dialog;
 import java.awt.FileDialog;
 import java.awt.Font;
 import java.awt.Frame;
@@ -17,12 +16,12 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.URL;
-import java.nio.charset.Charset;
 import java.util.Calendar;
 
 import javax.swing.JOptionPane;
@@ -35,6 +34,7 @@ public class Diary extends Frame{
 	Label todayL;
 	TextArea contentsTA;
 	
+	private static int contentLength = 0;
 	
 	public Diary() {
 		this("제목없음");
@@ -95,16 +95,38 @@ public class Diary extends Frame{
 		contentsTA.setText("");
 	}
 	
-	private void openFile() {
+	private void openFile() throws IOException {
+		String openDirectoryName = "files";
+		String contetns = null;
+		
+		File openDirectory = new File(openDirectoryName);
+		if(!openDirectory.exists()) {
+			openDirectory.mkdir();
+		}
+		
 		FileDialog fd = new FileDialog(this, "일기 열기", FileDialog.LOAD);
+		fd.setDirectory(openDirectory.getAbsolutePath());
 		fd.setVisible(true);
-		String openFile = null;
-		openFile = fd.getFile();
+		String openFile = fd.getFile();
 		if(openFile != null) {
 			File file = new File(openFile);
+			DataInputStream in = new DataInputStream(new FileInputStream(openDirectory.getAbsolutePath( ) + "/" + openFile));
+//			String contents= in.readUTF();
+			
+			byte[] bytes = new byte[1024];
+			int count = in.read(bytes);
+			contentsTA.setText(new String(bytes, 0, count));
+			
+//			String contents = "";
+//			for (int i=0; i<contentLength; i++) {
+//				contents += in.readChar();
+//			}
+//			contentsTA.setText(contents);
+			setTitle(openFile);
 		}
 	}
 	
+	/*
 	private void saveFile() throws IOException {
 		String saveDirectoryName = "files";
 		String saveFileName = String.format("%1$tF.txt", Calendar.getInstance());
@@ -141,6 +163,48 @@ public class Diary extends Frame{
 			setTitle(saveFile);
 		}
 	}
+	*/
+	
+	private void saveFile() throws IOException {
+		String saveDirectoryName = "files";
+		String saveFileName = String.format("%1$tF.dif", Calendar.getInstance());
+		String saveTitle = String.format("%1$tF %1$tT (%1$tA)", Calendar.getInstance());
+		String contetns = contentsTA.getText();
+		
+		if(contetns.length() == 0) {
+			JOptionPane.showMessageDialog(this, "저장할 내용이 없습니다..", "저장 오류", JOptionPane.ERROR_MESSAGE);
+			return ;
+		}
+		
+		File saveDirectory = new File(saveDirectoryName);
+		if(!saveDirectory.exists()) {
+			saveDirectory.mkdir();
+		}
+		
+		FileDialog fd = new FileDialog(this, "일기 저장", FileDialog.SAVE);
+		fd.setFile(saveFileName);
+		fd.setDirectory(saveDirectory.getAbsolutePath());
+		fd.setVisible(true);
+		
+		String saveFile = fd.getFile();
+		
+		if(saveFile != null) {
+			DataOutputStream out = new DataOutputStream(new FileOutputStream(saveDirectory.getAbsolutePath() + "/" +saveFile));
+//			out.writeUTF(saveTitle);
+//			out.writeBytes(saveTitle);
+//			out.writeBytes("-----------------------------");
+//			out.writeBytes(contetns.getBytes());
+			
+//			out.write(contetns.getBytes());
+			contentLength = contetns.length();
+			for (int i=0; i<contetns.length(); i++) {
+				out.writeChar(contetns.charAt(i));
+			}
+			
+			out.close();
+			setTitle(saveFile);
+		}
+	}
 	
 	private void exit() {
 		setVisible(false);
@@ -156,7 +220,12 @@ public class Diary extends Frame{
 				if(eventSource == newMI) {
 					setNew();
 				}else if(eventSource == openMI) {
-					openFile();
+					try {
+						openFile();
+					} catch (IOException e1) {
+						System.err.println(e1);
+						JOptionPane.showMessageDialog(null, "일기 열기중 오류가 발생하였습니다.", "열기 오류", JOptionPane.ERROR_MESSAGE);
+					}
 				}else if(eventSource == saveMI) {
 					try {
 						saveFile();
