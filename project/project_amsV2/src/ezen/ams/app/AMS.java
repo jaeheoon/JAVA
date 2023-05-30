@@ -114,6 +114,7 @@ public class AMS {
 				} catch (NotBalanceException e) {
 					System.err.println(e);
 					System.err.println("계좌 등록을 다시 해주시기 바랍니다.");
+					System.out.println("");
 				}
 				
 				// AccountRepository에 계좌등록
@@ -199,7 +200,7 @@ public class AMS {
 			
 			System.out.print("대출금액: ");
 			long borrowInputMoney = Long.parseLong(scanner.nextLine());
-			miAccount=null;
+			miAccount = null;
 			try {
 				miAccount = new MinusAccount(owner, passwd, inputMoney, borrowInputMoney);
 				System.out.println("※ 마이너스 계좌 정상 등록 처리되었습니다.");

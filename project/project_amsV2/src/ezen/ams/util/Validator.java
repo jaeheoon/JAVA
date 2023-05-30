@@ -20,11 +20,14 @@ public class Validator {
 	 */
 	public static boolean isNumber(String number) {
 		return number.matches("\\d+");
-
 	}
 	
 	public static boolean isId(String id) {
 		return id.matches("\\w{8,10}");
+	}
+	
+	public static boolean isName(String id) {
+		return id.matches("^[가-힣]{2,5}$");
 	}
 	
 //	테스트를 main
@@ -32,10 +35,10 @@ public class Validator {
 		String string = "     ";
 		System.out.println(Validator.hasText(string));
 		
-		String number = "45454545";
+		String number = "4545445";
 		boolean ok = Validator.isNumber(number);
 		System.out.println(ok);
-		ok = Validator.isId("bang가y313");
+		ok = Validator.isId("bangy313");
 		System.out.println(ok);
 		
 	}

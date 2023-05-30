@@ -30,6 +30,7 @@ import ezen.ams.domain.Account;
 import ezen.ams.domain.AccountType;
 import ezen.ams.domain.MinusAccount;
 import ezen.ams.exception.NotBalanceException;
+import ezen.ams.util.Validator;
 
 public class AMSFrame extends Frame {
 	Button seachB, delteB, checkB, printInfoB, accountSetB;
@@ -261,7 +262,6 @@ public class AMSFrame extends Frame {
 	
 //	계좌 삭제 기능
 	public void removeAccount() {
-		// 편의상 정상 입력되었다 가정
 		String accountNum = accountNumTF.getText();
 		boolean removeOk;
 		
@@ -271,6 +271,7 @@ public class AMSFrame extends Frame {
 				JOptionPane.showMessageDialog(this, "정상 삭제 처리되었습니다");
 			} else {
 				JOptionPane.showMessageDialog(this, "계좌번호를 확인해주시기 바랍니다");
+				printReset();
 			}
 		} 
 		printReset();
@@ -282,12 +283,18 @@ public class AMSFrame extends Frame {
 		Account seachAccount = AMSui.repository.searchAccount(accountNum);
 		
 		printHeader();
+		if (seachAccount != null && Validator.isNumber(accountNum)) {
 			if (seachAccount instanceof MinusAccount) {
 				accountList.append("마이너스계좌     "+seachAccount+"\n");
 				printReset();
 			}
 			else {
 				accountList.append("   입출금계좌     "+seachAccount+"\n");
+				printReset();
+			}
+				JOptionPane.showMessageDialog(this, "검색이 완료되었습니다");
+			} else {
+				JOptionPane.showMessageDialog(this, "계좌번호를 확인해주시기 바랍니다");
 				printReset();
 			}
 		}
@@ -297,6 +304,7 @@ public class AMSFrame extends Frame {
 		String accountOwner = accountOwnerTF.getText();
 		List<Account> list = AMSui.repository.searchAccountByOwner(accountOwner);
 		printHeader();
+		if (accountOwner != null && Validator.hasText(accountOwner) && Validator.isName(accountOwner)) {
 		for (Account account : list) {
 			if (account instanceof MinusAccount) {
 				accountList.append("마이너스계좌     "+account+"\n");
@@ -307,8 +315,12 @@ public class AMSFrame extends Frame {
 				printReset();
 			}
 		}
+			JOptionPane.showMessageDialog(this, "검색된 계좌의 수는: " +list.size()+"개 입니다");
+		} else {
+			JOptionPane.showMessageDialog(this, "조회되지 않는 이름입니다");
+		}
 	}
-	
+//	 입출금 계좌 등록
 	public void addAccount() {
 		
 		// 편의상 정상 입력되었다 가정
@@ -318,7 +330,6 @@ public class AMSFrame extends Frame {
 		
 		String selectedItem = accountType.getSelectedItem();
 		
-		// 입출금 계좌 등록
 		if(selectedItem.equals(AccountType.GENERAL_ACCOUNT.getName())) {
 			try {
 				account = new Account(accountOwner, password, inputMoney);
