@@ -6,5 +6,5 @@ package ezen.chat.protocol;
  * 230531 수업
  */
 public enum MessageType {
-	CONNECT, DIS_CONNECT, CHAT_MESSAGE, DM_MESSAGE
+	CONNECT, DIS_CONNECT, CHAT_MESSAGE, USER_LIST, DM_MESSAGE, DELTE_LIST
 }

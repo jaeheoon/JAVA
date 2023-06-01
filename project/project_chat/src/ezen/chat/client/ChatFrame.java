@@ -2,14 +2,16 @@ package ezen.chat.client;
 
 import java.awt.BorderLayout;
 import java.awt.Button;
+import java.awt.Choice;
 import java.awt.Frame;
 import java.awt.Label;
 import java.awt.Panel;
 import java.awt.TextArea;
 import java.awt.TextField;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.IOException;
@@ -35,6 +37,8 @@ public class ChatFrame extends Frame {
 	ChatClient chatClient;
 	String nickName;
 	
+	Choice userC;
+	
 	public ChatFrame() {
 		this("No-Title");
 	}
@@ -55,6 +59,7 @@ public class ChatFrame extends Frame {
 		nicknameList = new TextArea(10, 10);
 		northP = new Panel(new BorderLayout(5, 5));
 		southP = new Panel(new BorderLayout(5, 5));
+		userC = new Choice();
 	}
 	
 //	컴포넌트 배치
@@ -64,6 +69,7 @@ public class ChatFrame extends Frame {
 		northP.add(nicknameTF, BorderLayout.CENTER);
 		northP.add(loginB, BorderLayout.EAST);
 		
+		southP.add(userC, BorderLayout.WEST);
 		southP.add(inputTF, BorderLayout.CENTER);
 		southP.add(sendB, BorderLayout.EAST);
 		
@@ -71,6 +77,8 @@ public class ChatFrame extends Frame {
 		add(messageTA, BorderLayout.CENTER);
 		add(nicknameList, BorderLayout.EAST);
 		add(southP, BorderLayout.SOUTH);
+		
+		userC.add("전 체");
 	}
 	
 	public void connect() {
@@ -94,11 +102,32 @@ public class ChatFrame extends Frame {
 //	닉네임창 입력되면 비활성화, 안입력했으면 활성화
 	private void setEnable(boolean enable) {
 		nicknameTF.setEnabled(enable);
+		loginB.setEnabled(enable);
 	}
 	
 //	메세지를 클라이언트에서 받아서 TextArea에 저장해주는 기능
 	public void appendMessage(String message) {
 		messageTA.append(message + "\n");
+	}
+	
+//	귓속말 Choice에 닉네임 리스트를 표현해주는 기능
+	public void appendDM(String nickName) {
+		String[] users = nickName.split("-");
+		userC.removeAll();
+		
+		userC.add("전 체");
+		for (int i = 0; i < users.length; i++) {
+			userC.add(users[i]);
+		}
+	}
+	
+//	메세지를 클라이언트에서 받아서 UserTextArea에 저장해주는 기능
+	public void appendUserList(String message) {
+		String[] users = message.split("-");
+		nicknameList.setText("");
+		for (int i = 0; i < users.length; i++) {
+			nicknameList.append(users[i]+"\n");
+		}
 	}
 	
 //	텍스트를 서버로 보내주는 역할
@@ -107,7 +136,15 @@ public class ChatFrame extends Frame {
 		if (Validator.hasText(message)) {
 			try {
 //				chatClient.sendMessage("["+nickName+"]: " + message);
-				chatClient.sendMessage(MessageType.CHAT_MESSAGE+"|"+ nickName +"|"+ message);
+				
+				// DM전송
+				if(userC.getSelectedIndex() != 0) {
+					String receiveNickName = userC.getSelectedItem();
+					chatClient.sendMessage(MessageType.DM_MESSAGE+"|"+ nickName +"|"+ receiveNickName + "|" + message );
+				}else {// 다중메시지
+					chatClient.sendMessage(MessageType.CHAT_MESSAGE+"|"+ nickName +"|"+ message);
+				}
+				
 				inputTF.setText("");
 			} catch (IOException e) {
 			}
@@ -166,6 +203,7 @@ public class ChatFrame extends Frame {
 				sendChatMessage();
 			}
 		});
+		
 	}
 	
 	

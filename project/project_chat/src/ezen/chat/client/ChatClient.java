@@ -71,6 +71,22 @@ public class ChatClient {
 						case DIS_CONNECT:  
 							chatFrame.appendMessage("###### "+ senderNickName +"님이 연결 해제하였습니다 ######"); 
 							break;
+						case USER_LIST:
+							String userList = tokens[2];
+							chatFrame.appendUserList(userList);
+							chatFrame.appendDM(userList);
+							break;
+						case DELTE_LIST:
+							userList = tokens[2];
+							chatFrame.appendUserList(userList);
+							chatFrame.appendDM(userList);
+							break;
+						case DM_MESSAGE:
+							String[] DmTokens = serverMessage.split("\\|");
+							String dmMessage = DmTokens[3];
+							chatFrame.messageTA.append(dmMessage);
+							break;
+							
 						}
 //						chatFrame.appendMessage(serverMessage);					//서버에서 받아온 메세지를 TextArea에 붙여주는 역할
 					}

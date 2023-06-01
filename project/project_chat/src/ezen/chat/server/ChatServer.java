@@ -5,7 +5,11 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.Collection;
 import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
+
+import ezen.chat.protocol.MessageType;
 /**
  * 채팅 구현 프로그램 서버
  * @author 홍재헌
@@ -34,8 +38,7 @@ public class ChatServer {
 				// 데이터 송수신 스레드 생성 및 실행
 				ChatHandler chatHandler = new ChatHandler(socket, this);												//소켓 넘겨주는 작업
 				
-//				clients.put("닉네임", chatHandler);																		//닉네임 넣어주는 작업 하기
-//				chatHandler.start();
+				chatHandler.start();
 			}
 		} catch (IOException e) {
 			System.err.println("[ChatServer(" + SERVER_PORT + ")] 실행 중 아래와 같은 오류가 발생하였습니다.");
@@ -54,7 +57,7 @@ public class ChatServer {
 		clients.remove(chatHandler.getNickName());
 		System.out.println("[현재 채팅에 참여중인 클라이언트 수] : " + clients.size());
 	}
-
+	
 	/** 접속한 모든 클라이언트에게 메시지 전송 
 	 * @throws IOException */
 	public void sendMessageAll(String message) throws IOException {
@@ -62,6 +65,16 @@ public class ChatServer {
 		for (ChatHandler chatHandler : list) {
 			chatHandler.sendMessage(message);
 		}
+	}
+	/** 닉네임에 해당하는 ChatHandler 검색 */
+	public ChatHandler searchByNickname(String nickName) {
+		return clients.get(nickName);
+	}
+	
+	/** 서버에 유저 목록 제공 
+	 * @throws IOException */
+	public Collection<ChatHandler> getServerList() {
+		return clients.values();
 	}
 
 	/** ChatServer 종료 */
