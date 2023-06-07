@@ -47,10 +47,8 @@ public class FileInputExample {
 			}*/  //기본 개념
 			while ((byteCount = in.read(buffer)) != -1) {	//읽는 파일의 끝인 -1이 아닐 경우 계속 읽는다
 				totalBytes += byteCount;
-				System.out.println(totalBytes); 	//사진의 바이트 크기 확인
+				System.out.println(totalBytes); 			//사진의 바이트 크기 확인
 			}
-			
-			
 			System.out.println("파일을 다 읽었습니다");
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();

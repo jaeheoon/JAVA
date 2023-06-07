@@ -222,7 +222,9 @@ public class EventExampleFrame extends Frame{
 		button2.addActionListener(new ActionHandler());
 		
 //		삭제버튼(button3) 액션 이벤트 처리
-		button3.addActionListener(new ActionHandler());
+//		button3.addActionListener(new ActionHandler());
+//		람다식을 이용해 삭제 버튼 액션 이벤트 처리
+		button3.addActionListener((e)->{System.out.println("Delte");});
 		
 //		아이템 이벤트 처리
 		choice.addItemListener(new ItemListener() {

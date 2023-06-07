@@ -70,7 +70,7 @@ public class FileExample {
 	}
 	
 	// 사용자 홈디렉토리/Downloads/myApplication 디렉토리를 생성하고,
-		// mytest.txt 파일을 생성하시요...
+	// mytest.txt 파일을 생성하시요...
 		public  static void createDirectory() {
 			String downloadDirectory = System.getProperty("user.home") + "/Downloads";
 			File directory = new File(downloadDirectory + "/myApplication");
@@ -85,8 +85,6 @@ public class FileExample {
 					e.printStackTrace();
 				}
 			}
-			
-			
-		} 
+		}
 
 }
