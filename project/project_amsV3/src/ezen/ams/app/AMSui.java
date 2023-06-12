@@ -24,8 +24,6 @@ public class AMSui {
 		repository.addAccount(new MinusAccount("양재헌", 1111, 1000000, 10000000));
 		repository.addAccount(new MinusAccount("양재헌", 1111, 1000000, 10000000));
 		repository.addAccount(new Account("양재헌", 1111, 1000000));
-		
-		
 	}
 }
 
