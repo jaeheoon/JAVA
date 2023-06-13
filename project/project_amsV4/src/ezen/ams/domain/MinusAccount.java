@@ -35,12 +35,6 @@ public class MinusAccount extends Account{
 	public long Mideposit(long money) {
 		return borrowMoney += money;
 	}
-	
-//	필요에 따라 부모클래스로부터 받은 메소드를 재정의(Overriding)할 수 있다
-	@Override
-		public long getRestMoney() {
-			return borrowMoney;
-		}
 	@Override
 	public String toString() {
 		return super.toString()+"         "+borrowMoney;
