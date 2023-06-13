@@ -180,7 +180,7 @@ public class AMS {
 		private static void printAccounts()	{
 			Account[] list = repository.getAccounts();
 			for (int i = 0; i < repository.getCount(); i++) {
-			list[i].printInfo();			
+			list[i].printInfo();
 			}
 		}
 		

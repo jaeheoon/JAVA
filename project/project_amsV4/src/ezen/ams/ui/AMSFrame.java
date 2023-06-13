@@ -25,9 +25,10 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import ezen.ams.app.AMSui;
 import ezen.ams.domain.Account;
+import ezen.ams.domain.AccountRepository;
 import ezen.ams.domain.AccountType;
+import ezen.ams.domain.JdbcAccountRepository;
 import ezen.ams.domain.MinusAccount;
 import ezen.ams.exception.NotBalanceException;
 import ezen.ams.util.Validator;
@@ -42,6 +43,8 @@ public class AMSFrame extends Frame {
 	GridBagLayout grid = new GridBagLayout();
 	GridBagConstraints con = new GridBagConstraints();
 	
+	private AccountRepository repository;
+	
 	Account account = null;
 	
 	public AMSFrame() {
@@ -50,6 +53,13 @@ public class AMSFrame extends Frame {
 	
 	public AMSFrame(String title) {
 		super(title);
+		
+		try {
+			repository = new JdbcAccountRepository();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+			System.exit(0);
+		}
 		
 		setLayout(grid);
 		
@@ -143,7 +153,8 @@ public class AMSFrame extends Frame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {				//윈도우 창이 열렸을 때
-				allList();
+//				null 오류로 인해 잠시 주석, 끝나면 해제하기
+//				allList();
 				printReset();
 				borrowMoneyTF.setEnabled(false);
 				inputMoneyTF.setEnabled(false);
@@ -201,7 +212,7 @@ public class AMSFrame extends Frame {
 	public void allList() {
 		accountList.setText("");
 		printHeader();
-		List<Account> list = AMSui.repository.getAccounts();
+		List<Account> list = repository.getAccounts();
 		for (Account account : list) {
 			if (account instanceof MinusAccount) {
 				accountList.append("마이너스계좌     "+account.toString() + "\n");
@@ -259,7 +270,7 @@ public class AMSFrame extends Frame {
 		boolean removeOk;
 		
 		if (accountNum != null) {
-			removeOk = AMSui.repository.removeAccout(accountNum);
+			removeOk = repository.removeAccout(accountNum);
 			if (removeOk) {
 				JOptionPane.showMessageDialog(this, "정상 삭제 처리되었습니다");
 			} else {
@@ -274,7 +285,7 @@ public class AMSFrame extends Frame {
 //	계좌번호로 조회 기능
 	public void seachAccount() {
 		String accountNum = accountNumTF.getText();
-		Account seachAccount = AMSui.repository.searchAccount(accountNum);
+		Account seachAccount = repository.searchAccount(accountNum);
 		
 		printHeader();
 		if (seachAccount != null && Validator.isNumber(accountNum)) {
@@ -296,7 +307,7 @@ public class AMSFrame extends Frame {
 //	예금주명으로 조회기능
 	public void seachOwner() {
 		String accountOwner = accountOwnerTF.getText();
-		List<Account> list = AMSui.repository.searchAccountByOwner(accountOwner);
+		List<Account> list = repository.searchAccountByOwner(accountOwner);
 		printHeader();
 		if (accountOwner != null && Validator.hasText(accountOwner) && Validator.isName(accountOwner)) {
 		for (Account account : list) {
@@ -337,7 +348,7 @@ public class AMSFrame extends Frame {
 				e.printStackTrace();
 			}
 		}
-		AMSui.repository.addAccount(account);
+		repository.addAccount(account);
 		JOptionPane.showMessageDialog(this, "정상 등록 처리되었습니다");
 		printReset();
 		allList();

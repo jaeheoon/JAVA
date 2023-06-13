@@ -22,7 +22,7 @@ public class StringExample {
 		System.out.println("--------------substring() 메소드---------------------");
 		String title = "자바 프로그래밍";
 		System.out.println(title.substring(3));
-		System.out.println(title.substring(0, 2));
+		System.out.println(title.substring(4, 6));
 		
 //		replace: 단어를 새로운 단어로 변경 - 예시로는 게임에서 욕설을 다른 언어로 바뀌는 식으로 생각
 		System.out.println("---------------replace() 메소드----------------------");
