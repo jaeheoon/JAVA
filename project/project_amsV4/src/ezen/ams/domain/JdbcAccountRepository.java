@@ -4,15 +4,17 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 /**
  * RDB를 통해 은행계좌 목록 저장 및 관리 구현체
  * @author 홍재헌
- *
+ * 230613 제작
  */
 public class JdbcAccountRepository implements AccountRepository {
 	
+//	나중에 propertie 파일로 변경할 예정
 	private static String driver = "oracle.jdbc.driver.OracleDriver";
 	private static String url = "jdbc:oracle:thin:@localhost:1521:xe";
 	private static String userid = "hr";
@@ -25,6 +27,9 @@ public class JdbcAccountRepository implements AccountRepository {
 		con = DriverManager.getConnection(url, userid, password);
 	}
 	
+	/**
+	 * 계좌 수 반환
+	 */
 	@Override
 	public int getCount() {
 		int count = 0;
@@ -51,11 +56,14 @@ public class JdbcAccountRepository implements AccountRepository {
 		return count;
 	}
 
+	/**
+	 * 계좌 전체 목록 반환
+	 */
 	@Override
 	public List<Account> getAccounts() {
 			
-			Account account = null;
 			List<Account> list = null;
+			Account account = null;
 			StringBuilder sb = new StringBuilder();
 			
 			sb.append("SELECT ")
@@ -115,6 +123,9 @@ public class JdbcAccountRepository implements AccountRepository {
 			return list;
 		}
 
+	/**
+	 * 계좌 추가
+	 */
 	@Override
 	public boolean addAccount(Account account) {
 		boolean addAccount = false;
@@ -145,7 +156,7 @@ public class JdbcAccountRepository implements AccountRepository {
 			.append("    restmoney, ")
 			.append("    borrowmoney ")
 			.append(") VALUES ( ")
-			.append("    accountnum_seq.NEXTVAL, ")
+			.append("    TO_CHAR(SYSDATE, 'YYYY')|| '-' || accountnum_seq.NEXTVAL, ")
 			.append("?, ")
 			.append("?, ")
 			.append("?, ")
@@ -173,6 +184,9 @@ public class JdbcAccountRepository implements AccountRepository {
 		return addAccount;
 	}
 	
+	/**
+	 * 계좌번호로 검색 기능
+	 */
 	@Override
 	public Account searchAccount(String accountNum) {
 		Account account = null;
@@ -205,7 +219,7 @@ public class JdbcAccountRepository implements AccountRepository {
 			pstmt.setString(1, accountNum);
 			rs = pstmt.executeQuery();
 			
-			while (rs.next()) {
+			if (rs.next()) {
 				accountNum = rs.getString("accountnum");
 				int passwd = rs.getInt("passwd");
 				String accountowner = rs.getString("accountowner");
@@ -235,6 +249,9 @@ public class JdbcAccountRepository implements AccountRepository {
 		return account;
 	}
 
+	/**
+	 * 예금주명으로 검색하기
+	 */
 	@Override
 	public List<Account> searchAccountByOwner(String accountOwner) {
 		List<Account> list = null;
@@ -300,6 +317,9 @@ public class JdbcAccountRepository implements AccountRepository {
 		return list;
 	}
 
+	/**
+	 * 계좌 삭제 기능
+	 */
 	@Override
 	public boolean removeAccout(String accountNum) {
 		boolean removeAccount = false;
@@ -332,11 +352,21 @@ public class JdbcAccountRepository implements AccountRepository {
 		return removeAccount;
 	}
 	
+	public void close() {
+		if(con != null) {
+			try {
+				con.close();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
 //	독립적으로 돌아가는지 테스트 메인
 	public static void main(String[] args) throws Exception {
 		AccountRepository accountRepository = new JdbcAccountRepository();
-		accountRepository.addAccount(new Account("예재헌", 1111, 1000000));
-		accountRepository.addAccount(new MinusAccount("지피티", 1111, 1000000, 50000000));
+//		accountRepository.addAccount(new Account("예재헌", 1111, 1000000));
+//		accountRepository.addAccount(new MinusAccount("마재헌", 1111, 1000000, 50000000));
 		
 		System.out.println("--------------------- 계좌 수");
 		int count = accountRepository.getCount();

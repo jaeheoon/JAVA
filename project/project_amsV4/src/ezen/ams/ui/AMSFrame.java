@@ -153,8 +153,7 @@ public class AMSFrame extends Frame {
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowOpened(WindowEvent e) {				//윈도우 창이 열렸을 때
-//				null 오류로 인해 잠시 주석, 끝나면 해제하기
-//				allList();
+				allList();
 				printReset();
 				borrowMoneyTF.setEnabled(false);
 				inputMoneyTF.setEnabled(false);
@@ -163,6 +162,7 @@ public class AMSFrame extends Frame {
 			
 			@Override
 			public void windowClosing(WindowEvent e) {				//윈도우 x키 눌렀을때 닫히는 메소드
+				((JdbcAccountRepository)repository).close();
 				exit();
 			}
 		});
