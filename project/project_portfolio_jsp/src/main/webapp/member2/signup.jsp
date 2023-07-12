@@ -1,26 +1,25 @@
 <%@ page contentType="text/html; charset=utf-8" %>
-<!DOCTYPE HTML>
+<!doctype html>
+<html lang="ko">
 
-<html>
-	<head>
-		<title>회원가입</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<%-- CSS 파일 포함 --%>
-		<jsp:include page="/modules/styles.jsp"/>
-	</head>
-	<body>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    <%-- CSS 파일 포함 --%>
+    <jsp:include page="/modules/styles_tea.jsp"/>
+    
+    <title>Portfolio</title>
+</head>
 
-		<!-- ======================================== Header Start ====================================== -->
-        <jsp:include page="/modules/header.jsp"/>
+<body>
+        <!-- ======================================== Header Start ======================================== -->
+        <jsp:include page="/modules/header_tea.jsp"/>
         <!-- ======================================== Header End ======================================== -->
-			
-		<!-- ======================================== Banner Start ====================================== -->
-        <jsp:include page="/modules/banner.jsp"/>
-        <!-- ======================================== Banner End ======================================== -->
+    
 
-		<!-- One -->
-		<main>
+		<!-- ================================================== Main content Start =================================================-->
+    <main>
       <section class="position-relative">
         <div class="bg-pattern text-primary text-opacity-50 opacity-25 w-100 h-100 start-0 top-0 position-absolute">
         </div>
@@ -82,9 +81,37 @@
                       <button class="btn btn-primary" type="submit">가입하기</button>
                     </div>
                   </form>
+                  
+
                   <p class="pt-3 small text-body-tertiary">
                     이미 계정이 있습니까? <a href="#" class="ms-2 fw-semibold link-underline">로그인</a>
                   </p>
+
+                  <!--Divider-->
+
+                  <div class="d-flex align-items-center py-3">
+                    <span class="flex-grow-1 border-bottom pt-1"></span>
+                    <span
+                      class="d-inline-flex flex-center mx-1 lh-1 width-2x height-2x rounded-circle bg-body text-mono">OR</span>
+                    <span class="flex-grow-1 border-bottom pt-1"></span>
+                  </div>
+
+                  <div class="d-grid">
+                    <a href="#" class="d-flex hover-lift btn-secondary mb-2 btn position-relative flex-center">
+                      <!--Main Icon-->
+                      <div class="position-relative d-flex align-items-center">
+                        <img src="/assets/img/brands/google.svg" alt="" class="width-2x me-2">
+                        <span class="fs-6">sign up with google</span>
+                      </div>
+                    </a>
+                    <a href="#" class="d-flex hover-lift btn-secondary btn position-relative flex-center">
+                      <!--Main Icon-->
+                      <div class="position-relative d-flex align-items-center">
+                        <img src="/assets/img/brands/Facebook.svg" alt="" class="width-2x me-2">
+                        <span class="fs-6">sign up with facebook</span>
+                      </div>
+                    </a>
+                  </div>
                 </div>
               </div>
             </div>
@@ -92,17 +119,12 @@
         </div>
       </section>
     </main>
-		<p></p>
     <!-- ================================================== Main content End =================================================-->
 
-    </div>
+    
+    <!-- JavaScript Start -->
+    <jsp:include page="/modules/scripts.jsp"/>
+     <!-- JavaScript End -->
+</body>
 
-		<!--Footer Start-->
-        <jsp:include page="/modules/footer.jsp"/>
-        <!--Footer End-->
-
-		<!-- JavaScript Start -->
-   		<jsp:include page="/modules/scripts.jsp"/>
-    	<!-- JavaScript End -->
-	</body>
 </html>

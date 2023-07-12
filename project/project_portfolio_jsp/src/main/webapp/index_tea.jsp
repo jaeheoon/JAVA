@@ -3,23 +3,24 @@
 
 <html>
 	<head>
-		<title>Portfolio</title>
+		<title>Theory by TEMPLATED</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		
 		<%-- CSS 파일 포함 --%>
 		<jsp:include page="/modules/styles.jsp"/>
-		
-	</head>
-	<body>
-
 		<!-- ======================================== Header Start ====================================== -->
         <jsp:include page="/modules/header.jsp"/>
         <!-- ======================================== Header End ======================================== -->
-			
-		<!-- ======================================== Banner Start ====================================== -->
-        <jsp:include page="/modules/banner.jsp"/>
-        <!-- ======================================== Banner End ======================================== -->
+	</head>
+	<body>
+	
+
+		<!-- Banner -->
+			<section id="banner">
+				<h1>Welcome to Portfolio</h1>
+				<p>A free responsive HTML5 website template by TEMPLATED.</p>
+			</section>
 
 		<!-- One -->
 			<section id="one" class="wrapper">
@@ -68,7 +69,7 @@
 						<p>Semper suscipit posuere apede</p>
 					</header>
 					<div class="row">
-						<div class="col-3 box person 3u 12u$(medium)">
+						<div class="box person 3u 12u$(medium)">
 							<div class="image round">
 								<img src="assets/images/pic05.jpg" alt="Person 1" />
 							</div>
@@ -76,8 +77,8 @@
 							<h3>HongJaeHeon</h3>
 							<p>Engineer</p>
 						</div>
-						<div class="col-1 1u 12u$(medium)">      &nbsp;</div>
-						<div class="col-8 box person 8u 12u$(medium)">
+						<div class="1u 12u$(medium)">      &nbsp;</div>
+						<div class="box person 8u 12u$(medium)">
 							<p>
 								자기소개 내용입니다<br>
 								자기소개 내용입니다<br>
@@ -159,7 +160,11 @@
 
 		<!--Footer Start-->
         <jsp:include page="/modules/footer.jsp"/>
-        <!--Footer End-->
+         <!--Footer End-->
+
+		<div class="copyright">
+			Site made with: <a href="https://templated.co/">TEMPLATED.CO</a>
+		</div>
 
 		<!-- JavaScript Start -->
    		<jsp:include page="/modules/scripts.jsp"/>

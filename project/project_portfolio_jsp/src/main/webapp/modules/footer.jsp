@@ -14,3 +14,7 @@
 					</div>
 				</div>
 			</footer>
+
+		<div class="copyright">
+			Site made with: <a href="https://templated.co/">TEMPLATED.CO</a>
+		</div>
