@@ -43,10 +43,10 @@ public class JdbcMemoDao  implements MemoDao {
 			con = dataSource.getConnection();
 			pstmt = con.prepareStatement(sb.toString());
 			
-			pstmt.setString(1, member.getId());
-			pstmt.setString(2, member.getPasswd());
-			pstmt.setString(3, member.getName());
-			pstmt.setString(4, member.getEmail());
+			pstmt.setInt(1, memo.getId());
+			pstmt.setString(2, memo.getContent());
+			pstmt.setString(3, memo.getWriteDate());
+			pstmt.setString(4, memo.getMemberId());
 			pstmt.executeUpdate();
 			success = true;
 		} catch (Exception e) {

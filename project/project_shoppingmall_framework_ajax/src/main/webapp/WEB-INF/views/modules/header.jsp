@@ -4,7 +4,7 @@
 	<nav class="navbar navbar-expand-lg navbar-light py-3">
 		<div class="container position-relative">
 			<a class="navbar-brand width-3x" href="/"> <img
-				src="/assets/img/icon.png" alt=""
+				src="assets/img/icon.png" alt=""
 				class="img-fluid navbar-brand-light">
 			</a>
 

@@ -50,8 +50,6 @@ public class Memo {
 		this.memberId = memberId;
 	}
 	
-	
-
 	public String getMemberName() {
 		return memberName;
 	}

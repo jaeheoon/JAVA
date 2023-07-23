@@ -1,10 +1,10 @@
 <%@ page contentType="text/html; charset=utf-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- scripts -->
-<script src="/assets/js/theme.bundle.min.js"></script>
+<script src="assets/js/theme.bundle.min.js"></script>
 <!--Smooth scroll locomotive-->
-<script src="/assets/vendor/node_modules/js/locomotive-scroll.min.js"></script>
-<script src="/assets/vendor/node_modules/js/gsap.min.js"></script>
+<script src="assets/vendor/node_modules/js/locomotive-scroll.min.js"></script>
+<script src="assets/vendor/node_modules/js/gsap.min.js"></script>
 <script type="text/javascript">
         (function () {
             var scroll = new LocomotiveScroll({

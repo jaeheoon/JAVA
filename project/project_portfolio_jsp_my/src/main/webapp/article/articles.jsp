@@ -42,7 +42,7 @@
 								<div class="row">
 									<div class="mb-3 text-end">
 										<label class="form-label">2023-05-05</label>
-										<textarea class="form-control" name="content" placeholder="로그인 하여야 게시글을 입력할 수 있습니다...." required
+										<textarea class="form-control" name="content" placeholder="로그인 하여야 게시글을 입력할 수 있습니다" required
 											<c:if test="${empty loginMember}" disabled</c:if></textarea>
 									</div>
 
