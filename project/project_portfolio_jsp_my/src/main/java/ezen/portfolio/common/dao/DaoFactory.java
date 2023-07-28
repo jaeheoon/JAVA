@@ -79,7 +79,7 @@ public class DaoFactory {
 		MemoDao memoDao = factory.getMemoDao();
 		Memo memo = new Memo();
 		memo.setContent("잘 보고 갑니다..");
-		memoDao.create(memo);
+//		memoDao.create(memo);
 		
 	}
 	

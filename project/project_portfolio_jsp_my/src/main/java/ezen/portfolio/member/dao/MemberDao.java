@@ -12,6 +12,4 @@ public interface MemberDao {
 	public boolean create(Member member);
 	public Member findByUser(String id, String passwd);
 	public List<Member> findByAll();
-	
-	
 }
