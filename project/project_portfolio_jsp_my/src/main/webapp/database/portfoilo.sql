@@ -50,6 +50,21 @@ SELECT * FROM hr.member;
 -- È¤Àº
 SELECT * FROM hr.memo;
 
-
+-- SEQUANCE    -----------------------------------------------------------------------------------------
+CREATE SEQUENCE MEMO_ID_SEQ
+  START WITH 1
+  INCREMENT BY 1;
+  
+  commit;
+  
+  
+   SELECT
+		   to_char(m1.write_date, 'yyyy-MM-DD HH24:MI') write_date,
+		   m1.content                                   content,
+		   m2.name                                      member_name
+		   FROM
+		          memo m1
+		    LEFT JOIN member m2 ON m1.id = m2.id
+		   ORDER BY   m1.write_date DESC;
 
 

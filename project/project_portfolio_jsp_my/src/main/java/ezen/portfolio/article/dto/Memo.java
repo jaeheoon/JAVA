@@ -6,14 +6,16 @@ public class Memo {
 	private String content;
 	private String writeDate;
 	private String memberId;
+	private String memberName;
 	
 	public Memo() {}
 
-	public Memo(int id, String content, String writeDate, String memberId) {
+	public Memo(int id, String content, String writeDate, String memberId, String memberName) {
 		this.id = id;
 		this.content = content;
 		this.writeDate = writeDate;
 		this.memberId = memberId;
+		this.memberName = memberName;
 	}
 
 	public int getId() {
@@ -48,8 +50,17 @@ public class Memo {
 		this.memberId = memberId;
 	}
 
+	public String getMemberName() {
+		return memberName;
+	}
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
 	@Override
 	public String toString() {
-		return "Memo [id=" + id + ", content=" + content + ", writeDate=" + writeDate + ", memberId=" + memberId + "]";
+		return "Memo [id=" + id + ", content=" + content + ", writeDate=" + writeDate + ", memberId=" + memberId
+				+ ", memberName=" + memberName + "]";
 	}
 }

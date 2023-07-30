@@ -1,7 +1,47 @@
-<%@ page contentType="text/html; charset=utf-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<!DOCTYPE HTML>
+<%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<%@ page import="java.util.List"%>
+<%@ page import="ezen.portfolio.common.web.Pagination"%>
+<%@ page import="ezen.portfolio.common.web.PageParams"%>
+<%@ page import="ezen.portfolio.article.dto.Memo"%>
+<%@ page import="ezen.portfolio.article.dao.MemoDao"%>
+<%@ page import="ezen.portfolio.common.dao.DaoFactory"%>
+
+<%
+// ===================== 페이징 처리 ============================
+//한 페이지에 보여지는 목록 갯수 설정
+int elementSize = 20;
+//한페이지에 보여지는 페이지 갯수 설정
+int pageSize = 5;
+// -------------------------------------------------------------
+//사용자 선택페이지
+String requestPage = request.getParameter("page");
+if(requestPage == null || requestPage.equals("")){
+	requestPage = "1";
+}
+int selectPage = Integer.parseInt(requestPage);
+
+// -------------------------------------------------------------
+// 페이징 계산을 위한 게시글 전체 갯수 조회
+MemoDao memoDao =  DaoFactory.getInstance().getMemoDao();
+int rowCount = memoDao.getCountAll();
+
+//-------------------------------------------------------------
+// 전체 페이지수 계산
+PageParams params = new PageParams(elementSize, pageSize, selectPage, rowCount);
+Pagination pagination = new Pagination(params);
+
+//------------------------------------------------------------
+List<Memo> list = memoDao.findByAll(selectPage, elementSize);
+
+// 게시글 목록 설정
+request.setAttribute("list", list);
+// 페이징 정보 설정
+request.setAttribute("pagination", pagination);
+%>
+
+<!DOCTYPE HTML>
 <html>
 <head>
 <title>게시판</title>
@@ -43,7 +83,7 @@
 							<div class="row">
 								<div class="mb-3 text-end">
 									<textarea class="form-control" name="content"
-										placeholder="로그인 하여야 게시글을 입력할 수 있습니다...." required
+										placeholder="로그인 하여야 게시글을 입력할 수 있습니다..." required
 										<c:if test="${empty loginMember}">disabled</c:if>></textarea>
 								</div>
 							</div>
