@@ -10,7 +10,7 @@ import ezen.portfolio.member.dto.Member;
 
 /**
  * RDB를 통해 회원  저장 및 관리(검색, 수정, 삭제) 구현체
- * @author 김기정
+ * @author 홍재헌
  */
 public class JdbcMemberDao  implements MemberDao {
 	

@@ -1,4 +1,5 @@
 <%@ page contentType="text/html; charset=utf-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE HTML>
 
 <html>
@@ -26,22 +27,22 @@
           <div class="card fat">
             <div class="card-body">
               <h4 class="card-title">Login</h4>
-              <form method="POST" class="my-login-validation" novalidate="">
+              <form method="POST" class="my-login-validation" novalidate action="signin-action.jsp">
                 <div class="form-group">
                   <label for="email">E-Mail Address</label>
-                  <input id="email" type="email" class="form-control" name="email" value="" required autofocus>
+                  <input id="id" type="text" class="form-control" name="id" value="${cookie.saveid.value}" required autofocus>
                   <div class="invalid-feedback">
                     Email is invalid
                   </div>
                 </div>
 
                 <div class="form-group">
-                  <label for="password">Password
+                  <label for="passwd">Password
                     <a href="/" class="float-right">
                       홈으로
                     </a>
                   </label>
-                  <input id="password" type="password" class="form-control" name="password" required data-eye>
+                  <input id="passwd" type="password" class="form-control" name="passwd" required data-eye>
                   <div class="invalid-feedback">
                     Password is required
                   </div>
@@ -49,7 +50,7 @@
 
                 <div class="form-group">
                   <div class="custom-checkbox custom-control">
-                    <input type="checkbox" name="remember" id="remember" class="custom-control-input">
+                    <input type="checkbox" name="saveid" id="remember" class="custom-control-input" <c:if test="${not empty cookie.saveid}">checked</c:if>>
                     <label for="remember" class="custom-control-label">Remember Me</label>
                   </div>
                 </div>

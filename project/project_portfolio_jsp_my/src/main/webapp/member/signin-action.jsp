@@ -11,7 +11,6 @@
 request.setCharacterEncoding("utf-8");
 String id = request.getParameter("id");
 String passwd = request.getParameter("passwd");
-
 String saveId = request.getParameter("saveid");
 
 MemberDao memberDao = DaoFactory.getInstance().getMemberDao();
@@ -37,7 +36,7 @@ request.setAttribute("loginMember", loginMember);
 		</script>
 	</c:when>
 	<c:otherwise>
-		<c:set var="loginMember" value="${loginMember}" scope="session"/>	
+		<c:set var="loginMember" value="${loginMember}" scope="session"/>
 		<c:redirect url="/"/>	
 	</c:otherwise>
 </c:choose>
