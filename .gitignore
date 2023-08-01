@@ -1,5 +1,5 @@
-# Created by https://www.toptal.com/developers/gitignore/api/java,c++,windows,eclipse,intellij,visualstudiocode,gradle,maven,node
-# Edit at https://www.toptal.com/developers/gitignore?templates=java,c++,windows,eclipse,intellij,visualstudiocode,gradle,maven,node
+# Created by https://www.toptal.com/developers/gitignore/api/java,windows,eclipse,c++,macos,intellij,visualstudiocode,gradle,maven,node
+# Edit at https://www.toptal.com/developers/gitignore?templates=java,windows,eclipse,c++,macos,intellij,visualstudiocode,gradle,maven,node
 
 ### C++ ###
 # Prerequisites
@@ -240,6 +240,39 @@ fabric.properties
 hs_err_pid*
 replay_pid*
 
+### macOS ###
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Icon must end with two \r
+Icon
+
+
+# Thumbnails
+._*
+
+# Files that might appear in the root of a volume
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Directories potentially created on remote AFP share
+.AppleDB
+.AppleDesktop
+Network Trash Folder
+Temporary Items
+.apdisk
+
+### macOS Patch ###
+# iCloud generated files
+*.icloud
+
 ### Maven ###
 target/
 pom.xml.tag
@@ -468,4 +501,4 @@ gradle-app.setting
 # Java heap dump
 *.hprof
 
-# End of https://www.toptal.com/developers/gitignore/api/java,c++,windows,eclipse,intellij,visualstudiocode,gradle,maven,node
+# End of https://www.toptal.com/developers/gitignore/api/java,windows,eclipse,c++,macos,intellij,visualstudiocode,gradle,maven,node
