@@ -4,7 +4,7 @@ import ezen.portfolio.member.dto.Member;
 
 /**
  * 데이터 베이스 회원 관리 명세
- *  @author 김기정
+ *  @author 홍재헌
  *
  */
 public interface MemberDao {

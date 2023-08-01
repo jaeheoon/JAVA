@@ -2,7 +2,7 @@ package ezen.chat.protocol;
 
 /**
  * 입력데이터 유효성 검증 공통 기능 정의 유틸리티
- * @author 김기정
+ * @author 홍재헌
  */
 public class Validator {
 	

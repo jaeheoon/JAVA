@@ -10,7 +10,7 @@ import ezen.chat.server.ChatServer;
 
 /**
  * 연결 메시지에 대한 응답 처리
- * @author 김기정
+ * @author 홍재헌
  */
 public class ConnectMessageHandler implements MessageListener{
 

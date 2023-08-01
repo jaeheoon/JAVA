@@ -2,7 +2,7 @@ package ezen.chat.protocol;
 
 /**
  * 채팅메시지 빌더 유틸리티
- * @author 김기정
+ * @author 홍재헌
  *
  */
 public class MessageBuilder {

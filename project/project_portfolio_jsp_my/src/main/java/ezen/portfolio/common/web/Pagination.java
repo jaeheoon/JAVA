@@ -2,7 +2,7 @@ package ezen.portfolio.common.web;
 
 /**
  * 페이징 처리 계산
- * @author 김기정
+ * @author 홍재헌
  */
 public class Pagination {
 	

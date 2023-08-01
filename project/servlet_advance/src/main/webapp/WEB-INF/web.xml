@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>servlet_advance</display-name>
+  
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+    <welcome-file>index.jsp</welcome-file>
+    <welcome-file>index.htm</welcome-file>
+  </welcome-file-list>
+  
+  <!-- 모든 서블릿들을 위한 초기 설정 정보 등록 -->
+  <context-param>
+  	<param-name>page-title</param-name>
+  	<param-value>서블릿 연습 사이트입니다..</param-value>
+  </context-param>
+  
+  <!-- 
+  <context-param>
+  	<param-name>page-title</param-name>
+  	<param-value>서블릿 연습 사이트입니다..</param-value>
+  </context-param>
+    -->
+  
+</web-app>
+
+
+

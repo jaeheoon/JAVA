@@ -2,7 +2,7 @@ package ezen.oop.interfacee;
 
 /**
  * 자동차 명세
- * @author 김기정
+ * @author 홍재헌
  *
  */
 public interface Car {

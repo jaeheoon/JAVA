@@ -7,7 +7,7 @@ import ezen.portfolio.article.dto.Memo;
 /**
  * 데이터 베이스 게시글 관리 명세
  * 
- * @author 김기정
+ * @author 홍재헌
  */
 public interface MemoDao {
 
