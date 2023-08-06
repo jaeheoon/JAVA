@@ -7,8 +7,7 @@ import java.util.List;
 /**
  * 파일을 통해 은행계좌 목록 저장 및 관리(검색, 수정, 삭제) 구현체
  * 
- * @author 김기정
- * @author 강소영
+ * @author 홍재헌
  * @since 1.0
  */
 public class FiletAccountRepository  implements AccountRepository {

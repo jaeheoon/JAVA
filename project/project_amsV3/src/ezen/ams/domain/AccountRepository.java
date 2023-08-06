@@ -20,5 +20,5 @@ public interface AccountRepository {
 //	검색된 계좌 배열(정보) 리턴
 	public List<Account> searchAccountByOwner(String accountOwner);
 //	계좌 삭제 성공 여부
-	public boolean removeAccout(String accountNum);	
+	public boolean removeAccount(String accountNum);	
 }

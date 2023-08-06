@@ -259,7 +259,7 @@ public class AMSFrame extends Frame {
 		boolean removeOk;
 		
 		if (accountNum != null) {
-			removeOk = AMSui.repository.removeAccout(accountNum);
+			removeOk = AMSui.repository.removeAccount(accountNum);
 			if (removeOk) {
 				JOptionPane.showMessageDialog(this, "정상 삭제 처리되었습니다");
 			} else {

@@ -67,7 +67,7 @@ public class ListAccountRepository implements AccountRepository{
 		return searchAccounts;
 	}
 	
-	public boolean removeAccout(String accountNum) {
+	public boolean removeAccount(String accountNum) {
 		for (int i = 0; i < accounts.size(); i++) {	
 			Account account = accounts.get(i);
 			if(account.getAccountNum().equals(accountNum)) {

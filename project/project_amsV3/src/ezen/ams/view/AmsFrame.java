@@ -7,7 +7,6 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.ItemSelectable;
 import java.awt.Label;
 import java.awt.TextArea;
 import java.awt.TextField;
@@ -21,11 +20,12 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import ezen.ams.app.AMS;
 import ezen.ams.domain.Account;
+import ezen.ams.domain.AccountRepository;
 import ezen.ams.domain.AccountType;
+import ezen.ams.domain.FileAccountRepository;
 import ezen.ams.domain.MinusAccount;
-import ezen.ams.util.Validator;
+import ezen.ams.exception.NotBalanceException;
 
 @SuppressWarnings("serial")
 public class AmsFrame extends Frame {
@@ -37,13 +37,23 @@ public class AmsFrame extends Frame {
 	
 	GridBagLayout gridbag = new GridBagLayout();
 	GridBagConstraints con = new GridBagConstraints();
+	
+	private AccountRepository repository;
 
 	public AmsFrame() {
 		this("무제");
 	}
 
 	public AmsFrame(String title) {
-		super(title);
+		
+		try {
+			repository = new FileAccountRepository();
+		} catch (Exception e) {
+			JOptionPane.showMessageDialog(this, e.getMessage());
+			System.exit(0);
+		}
+		
+		setTitle(title);
 //		setTitle(title);
 //		label 8개
 		acctypeL = new Label("계좌종류");
@@ -141,7 +151,7 @@ public class AmsFrame extends Frame {
 	public void allList() {
 		bottomTA.setText("");
 		printHeader();
-		List<Account> list = AMS.repository.getAccounts();
+		List<Account> list = repository.getAccounts();
 		for (Account account : list) {
 			bottomTA.append(account.toString() + "\n");
 		}
@@ -172,13 +182,21 @@ public class AmsFrame extends Frame {
 		String selectedItem = choice.getSelectedItem();
 		// 입출금 계좌 등록
 		if(selectedItem.equals(AccountType.GENERAL_ACCOUNT.getName())) {
-			account = new Account(accountOwner, password, inputMoney);
-		} else if(selectedItem.equals(AccountType.MINUS_ACCONUT.getName())){
+			try {
+				account = new Account(accountOwner, password, inputMoney);
+			} catch (NotBalanceException e) {
+				e.printStackTrace();
+			}
+		} else if(selectedItem.equals(AccountType.MINUS_ACCOUNT.getName())){
 			long loanMoney = Long.parseLong(loanTF.getText());
-			account = new MinusAccount(accountOwner, password, inputMoney, loanMoney);
+			try {
+				account = new MinusAccount(accountOwner, password, inputMoney, loanMoney);
+			} catch (NotBalanceException e) {
+				e.printStackTrace();
+			}
 		}
 		
-		AMS.repository.addAccount(account);
+		repository.addAccount(account);
 //		System.out.println("ADD Compliete!!!");
 		JOptionPane.showMessageDialog(this, "정상 등록 처리되었습니다.");
 	}

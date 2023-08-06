@@ -11,6 +11,5 @@ public class AMS {
 		frame.setResizable(false);
 		frame.addEventListner();
 		frame.setVisible(true);
-	}	
-
+	}
 }

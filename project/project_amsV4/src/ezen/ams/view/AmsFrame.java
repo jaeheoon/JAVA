@@ -7,7 +7,6 @@ import java.awt.Frame;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.Insets;
-import java.awt.ItemSelectable;
 import java.awt.Label;
 import java.awt.TextArea;
 import java.awt.TextField;
@@ -21,13 +20,12 @@ import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import ezen.ams.app.AMS;
 import ezen.ams.domain.Account;
 import ezen.ams.domain.AccountRepository;
 import ezen.ams.domain.AccountType;
 import ezen.ams.domain.JdbcAccountRepository;
 import ezen.ams.domain.MinusAccount;
-import ezen.ams.util.Validator;
+import ezen.ams.exception.NotBalanceException;
 
 @SuppressWarnings("serial")
 public class AmsFrame extends Frame {
@@ -185,10 +183,18 @@ public class AmsFrame extends Frame {
 		String selectedItem = choice.getSelectedItem();
 		// 입출금 계좌 등록
 		if(selectedItem.equals(AccountType.GENERAL_ACCOUNT.getName())) {
-			account = new Account(accountOwner, password, inputMoney);
-		} else if(selectedItem.equals(AccountType.MINUS_ACCONUT.getName())){
+			try {
+				account = new Account(accountOwner, password, inputMoney);
+			} catch (NotBalanceException e) {
+				e.printStackTrace();
+			}
+		} else if(selectedItem.equals(AccountType.MINUS_ACCOUNT.getName())){
 			long loanMoney = Long.parseLong(loanTF.getText());
-			account = new MinusAccount(accountOwner, password, inputMoney, loanMoney);
+			try {
+				account = new MinusAccount(accountOwner, password, inputMoney, loanMoney);
+			} catch (NotBalanceException e) {
+				e.printStackTrace();
+			}
 		}
 		
 		repository.addAccount(account);
