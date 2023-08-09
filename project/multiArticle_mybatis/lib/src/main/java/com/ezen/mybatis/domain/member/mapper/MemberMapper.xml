@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+                        
+<!-- 네임스페이스(사용영역) 설정 -->
+<mapper namespace="com.ezen.mybatis.domain.member.mapper.MemberMapper">
+
+	<!-- select 태그를 이용하여 전체사원 조회를 위한 SQL 매핑 -->
+	<!-- mybatis-config에 별칭으로 resultType을 설정해줄 수 있다 -->
+	<select id="findByAll" resultType="Member" >
+		SELECT id , 
+		       passwd , 
+		       name, 
+		       email, 
+		       TO_CHAR(regdate, 'YYYY-MM-DD') regdate 
+		FROM   member 
+		ORDER  BY regdate ASC
+	</select>
+	
+	<!-- id로 회원 찾기 -->
+	<!-- resultType : 반환 타입, parameterType : 매개변수 타입 -->
+	<select id="findById"  parameterType="string" resultType="Member">
+		SELECT id , 
+		       passwd , 
+		       name, 
+		       email, 
+		       TO_CHAR(regdate, 'YYYY-MM-DD') regdate 
+		FROM   member 
+		WHERE  id = #{value} 
+	</select>
+	
+	<!-- id, passwd로 회원 찾기 -->
+	<select id="findByUser"  parameterType="string" resultType="Member">
+		SELECT id , 
+		       passwd , 
+		       name, 
+		       email, 
+		       TO_CHAR(regdate, 'YYYY-MM-DD') regdate 
+		FROM   member 
+		WHERE  id = #{id} AND passwd = #{passwd} 
+	</select>
+	
+	<!-- 회원 등록 -->
+	<insert id="create" parameterType="Member">
+		INSERT INTO member 
+		            (id,
+		            passwd,
+		            name,
+		            email,
+		            regdate) 
+		VALUES     (#{id},
+					#{passwd},
+					#{name},
+					#{email},
+					SYSDATE)
+	</insert>
+	
+</mapper>

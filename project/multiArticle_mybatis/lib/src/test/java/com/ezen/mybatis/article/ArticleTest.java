@@ -1,0 +1,140 @@
+package com.ezen.mybatis.article;
+
+import static org.assertj.core.api.Assertions.assertThat;
+
+import java.io.IOException;
+import java.io.Reader;
+import java.util.List;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+
+import com.ezen.mybatis.domain.article.dto.ArticleDTO;
+import com.ezen.mybatis.domain.article.mapper.ArticleMapper;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+public class ArticleTest {
+
+	private SqlSession sqlSession = null;
+
+	@BeforeEach
+	void init() {
+		String resource = "mybatis-config.xml";
+
+		Reader reader = null;
+		try {
+			reader = Resources.getResourceAsReader(resource);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(reader);
+		sqlSession = sqlSessionFactory.openSession(true);
+
+		System.out.println("==================== sqlSession 생성 완료 ====================");
+	}
+
+	@Test
+	@DisplayName("전체 게시판 조회")
+	@Disabled
+	public void findAllTest(){
+		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
+		log.debug("hi : {}", mapper);
+		List<ArticleDTO> list = mapper.findAll();
+		for (ArticleDTO articleDTO : list) {
+			System.out.println(articleDTO);
+		}
+	}
+	
+	@Test
+	@DisplayName("게시글 첫 글 등록")
+	@Disabled
+	void createTest() {
+		ArticleDTO article = ArticleDTO.builder()
+							.boardId(20)
+							.writer("monday")
+							.subject("게시글 제목 테스트")
+							.content("게시글 내용 테스트")
+							.passwd("1111")
+							.levelNo(0)
+							.orderNo(0)
+							.build();
+		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
+		mapper.create(article);
+//		sqlSession.rollback();
+		System.out.println("신규 게시판 등록 완료");
+		assertThat(article)
+			.isNotNull();
+	}
+	
+	@Test
+	@DisplayName("게시글 댓글 등록")
+	@Disabled
+	void commentCreateTest() {
+		ArticleDTO article = ArticleDTO.builder()
+							.boardId(20)
+							.writer("tuesday")
+							.subject("게시글 댓글 제목 테스트1")
+							.content("게시글 댓글 내용 테스트1")
+							.passwd("1111")
+							.groupNo(74)
+							.levelNo(1)
+							.orderNo(1)
+							.build();
+		ArticleMapper mapper = sqlSession.getMapper(ArticleMapper.class);
+		mapper.commentCreate(article);
+//		sqlSession.rollback();
+		System.out.println("신규 댓글 등록 완료");
+		assertThat(article)
+			.isNotNull();
+	}
+	
+	@Test
+	@DisplayName("게시글 상세보기")
+	public void readArticleTest() {
+		
+		//given
+			int groupNo = 1;
+		//when
+			ArticleMapper articleMapper = sqlSession.getMapper(ArticleMapper.class);
+		//then
+			
+	}
+	
+	@Test
+	@DisplayName("해당 게시글 삭제")
+	@Disabled
+	public void deleteArticleTest() {
+		//given(get이나 post방식으로 선택된 articleId를 넘겨받았다 치고 작업함.)
+		String passwd = "1111";
+		int articleId = 3;
+		
+		//when
+		ArticleMapper articleMapper = sqlSession.getMapper(ArticleMapper.class);
+		boolean result = articleMapper.deleteArticle(articleId, passwd);
+		
+		//then
+		assertThat(result).isTrue();
+		log.debug("삭제 여부 : {}", result);
+		
+//		if(result == true) {
+//			sqlSession.commit();			
+//		} else {
+//			sqlSession.rollback();			
+//		}
+	}
+	
+	@AfterEach
+	public void destory() {
+		sqlSession.close();
+	}
+	
+}

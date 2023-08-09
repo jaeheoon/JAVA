@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!-- 네임스페이스(사용영역) 설정 -->
+<mapper
+	namespace="com.ezen.mybatis.domain.article.mapper.ArticleMapper">
+	<!-- select 태그를 이용하여 전체 게시글 조회를 위한 SQL 매핑 - 연결 테스트용 -->
+	<select id="findAll" resultType="ArticleDTO">
+		SELECT article_id id,
+		subject,
+		writer,
+		regdate,
+		hitcount,
+		group_no,
+		level_no,
+		order_no
+		FROM article
+		WHERE
+		board_id = 10
+		ORDER BY group_no DESC, order_no ASC
+	</select>
+	
+	<!-- 게시글 상세보기 -->
+	<select id="" parameterType="int" resultType="ArticleDTO">
+		SELECT subject,
+			   content, regdate, level_no,order_no
+		FROM article
+		WHERE group_no=1
+		ORDER BY order_no;
+	</select>
+
+	<!-- 게시글 등록 -->
+	<insert id="create" parameterType="ArticleDTO">
+		INSERT INTO article (
+		article_id,
+		board_id,
+		writer,
+		subject,
+		content,
+		passwd,
+		group_no,
+		level_no,
+		order_no)
+		VALUES (
+		article_id_seq.NEXTVAL,
+		#{boardId},
+		#{writer},
+		#{subject},
+		#{content},
+		#{passwd},
+		article_id_seq.CURRVAL,
+		#{levelNo},
+		#{orderNo})
+	</insert>
+
+	<!-- 게시글 댓글 등록 -->
+	<insert id="commentCreate" parameterType="ArticleDTO">
+		INSERT INTO article(
+			article_id,
+			board_id,
+			writer,
+			subject,
+			content,
+			passwd,
+			group_no,
+			level_no,
+			order_no)
+		VALUES (article_id_seq.NEXTVAL,
+			#{boardId},
+			#{writer},
+			#{subject},
+			#{content},
+			#{passwd},
+			#{groupNo},
+			#{levelNo} + 1,
+			(SELECT MAX(order_no) + 1
+		FROM article
+		WHERE board_id = #{boardId}
+		AND group_no = #{groupNo}))
+	</insert>
+	
+	<!-- 선택된 아티클Id받아서 삭제 -->
+	<delete id="deleteArticle">
+		DELETE 
+  		FROM article
+ 		WHERE passwd = #{passwd} AND article_Id = #{articleId}
+	</delete>
+</mapper>
