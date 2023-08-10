@@ -24,34 +24,40 @@
 	<!-- 게시글 상세보기 -->
 	<select id="" parameterType="int" resultType="ArticleDTO">
 		SELECT subject,
-			   content, regdate, level_no,order_no
+			   content, 
+			   regdate, 
+			   level_no,
+			   order_no,
+			   writer,
+			   hitcount,
+			   article_id
 		FROM article
-		WHERE group_no=1
-		ORDER BY order_no;
+		WHERE group_no=#{groupNo}
+		ORDER BY order_no
 	</select>
 
 	<!-- 게시글 등록 -->
 	<insert id="create" parameterType="ArticleDTO">
 		INSERT INTO article (
-		article_id,
-		board_id,
-		writer,
-		subject,
-		content,
-		passwd,
-		group_no,
-		level_no,
-		order_no)
+				article_id,
+				board_id,
+				writer,
+				subject,
+				content,
+				passwd,
+				group_no,
+				level_no,
+				order_no)
 		VALUES (
-		article_id_seq.NEXTVAL,
-		#{boardId},
-		#{writer},
-		#{subject},
-		#{content},
-		#{passwd},
-		article_id_seq.CURRVAL,
-		#{levelNo},
-		#{orderNo})
+				article_id_seq.NEXTVAL,
+				#{boardId},
+				#{writer},
+				#{subject},
+				#{content},
+				#{passwd},
+				article_id_seq.CURRVAL,
+				#{levelNo},
+				#{orderNo})
 	</insert>
 
 	<!-- 게시글 댓글 등록 -->
@@ -78,6 +84,43 @@
 		FROM article
 		WHERE board_id = #{boardId}
 		AND group_no = #{groupNo}))
+	</insert>
+	
+	<!-- 대댓글 달기 전 들어가는 자리 이상의 order_no를 증가시키는 쿼리 -->
+	<update id="updateOrderNo">
+		UPDATE article 
+		SET    order_no = order_no + 1 
+		WHERE  board_id = #{boardId} 
+       	AND group_no = 1 
+       	AND order_no > (SELECT order_no 
+                       FROM   article 
+                       WHERE  article_id = #{articleId})
+	</update>
+	
+	<!-- 대댓글 달기 -->
+	<insert id="setRRefly" parameterType="ArticleDTO">
+		INSERT INTO article
+            (article_id,
+             board_id,
+             writer,
+             subject,
+             content,
+             passwd,
+             group_no,
+             level_no,
+             order_no)
+		VALUES      (
+             article_id_seq.NEXTVAL,
+             #{boardId},
+             #{writer},
+             #{subject},
+             #{content},
+             #{passwd},
+             #{groupNo},
+             #{levelNo},
+             (SELECT order_no + 1
+              FROM   article
+              WHERE  article_id = #{articleId}))
 	</insert>
 	
 	<!-- 선택된 아티클Id받아서 삭제 -->

@@ -14,7 +14,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 public class ArticleDTO {
-	private int id;				//게시글 id
+	private int articleId;				//게시글 id
 	private int boardId;		//게시판 id
 	private String writer;		//게시글 작성자
 	private String subject;		//게시글 제목

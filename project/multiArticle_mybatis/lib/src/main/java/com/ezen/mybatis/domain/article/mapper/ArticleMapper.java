@@ -2,6 +2,8 @@ package com.ezen.mybatis.domain.article.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.ezen.mybatis.domain.article.dto.ArticleDTO;
 import com.ezen.mybatis.domain.common.web.PageParams;
 
@@ -29,9 +31,16 @@ public interface ArticleMapper {
 	// 댓글 쓰기 기능
 	public void commentCreate(ArticleDTO articleDTO);
 	
+	//대댓글 적기 전 선택된게시판 id와 해당하는 글의 id를 받아와 order_no 증가
+	public boolean updateOrderNo(@Param("articleId") int articleId, @Param("boardId") int boardId);
+	
 	// 대댓글 쓰기 기능
-	public void setRRefly(ArticleDTO articleDTO);
+	public boolean setRRefly(ArticleDTO articleDTO);
+	
+	//해당 그룹 모든 글
+	public List<ArticleDTO> readArticle(int groupNo);
 	
 	// Article id 받아서 삭제
-	public boolean deleteArticle(int articleId, String passwd);
+	public boolean deleteArticle(@Param("passwd") String passwd, @Param("articleId") int articleId);
+	
 }
