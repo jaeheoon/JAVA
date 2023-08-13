@@ -52,4 +52,26 @@
 		</if>
 	</select>
 	
+	<!-- 계층형 게시판 및 페이징 처리를 위한 게시글목록 출력 -->
+	<select id="findSearchArticle" parameterType="map" resultType="ArticleDTO">
+		SELECT subject, 
+     	  	   writer, 
+      	  	   regdate, 
+        	   hitcount 
+		FROM   (SELECT CEIL(rownum / #{rows}) requestPage, 
+               subject, 
+               writer, 
+               TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate, 
+               hitcount 
+            FROM   (SELECT subject, 
+                           writer, 
+                           regdate, 
+                           hitcount 
+                    FROM   article 
+                    WHERE  board_id = #{boardId}
+                    ORDER  BY group_no DESC, 
+                              order_no ASC)) 
+		WHERE  requestPage = 1
+	</select>
+	
 </mapper>
