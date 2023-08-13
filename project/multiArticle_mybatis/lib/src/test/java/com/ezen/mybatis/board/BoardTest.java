@@ -70,7 +70,7 @@ public class BoardTest {
 	}
 	
 	@Test
-//	@Disabled
+	@Disabled
 	void updateBoardTest() {
 		BoardDTO updateBoard = new BoardDTO();
 		updateBoard.setId(50);

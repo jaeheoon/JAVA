@@ -30,5 +30,26 @@
 		</if>
 	</select>
 	
+	<!-- 페이징 처리를 위한 글 정보 출력 -->
+	<select id="findSearchPage" parameterType="map" resultType="ArticleDTO">
+		SELECT article_id "articleId",
+			   subject, 
+      		   writer, 
+        	   regdate, 
+        	   hitcount
+		FROM article
+		<if test="type != null">
+			<choose>
+				<when test="type == 'id'">
+					WHERE board_id = #{boardId}
+				</when>
+				<when test="type == 'name'">
+					WHERE writer = '%' || #{value} || '%'
+					OR subject LIKE '%' || #{value} || '%'
+					OR content LIKE '%' || #{value} || '%'
+				</when>
+			</choose>
+		</if>
+	</select>
 	
 </mapper>

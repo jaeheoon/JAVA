@@ -3,6 +3,7 @@ package com.ezen.mybatis.page;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.io.Resources;
@@ -15,6 +16,7 @@ import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import com.ezen.mybatis.domain.article.dto.ArticleDTO;
 import com.ezen.mybatis.domain.common.web.mapper.PaginationMapper;
 
 import lombok.extern.slf4j.Slf4j;
@@ -51,7 +53,7 @@ public class PageTest {
 	}
 	
 	@Test
-//	@Disabled
+	@Disabled
 	@DisplayName("검색 게시판 갯수")
 	void findSearchCountTest() {
 		log.debug("==================== 검색 게시판 조회 ========================");
@@ -65,6 +67,25 @@ public class PageTest {
 		searchParams.put("value", "monday");
 		int count = mapper.findSearchCount(searchParams);
 		log.debug("검색 게시판 갯수는 : {}", count);
+	}
+	
+	@Test
+	@DisplayName("검색된 페이지 정보")
+	@Disabled
+	void findSearchPageTest() {
+		PaginationMapper mapper = sqlSession.getMapper(PaginationMapper.class);
+		
+		Map<String, Object> searchParams = new HashMap<String, Object>();
+//		searchParams.put("type", "id");
+//		searchParams.put("value", 150);
+
+		searchParams.put("type", "name");
+		searchParams.put("value", "monday");
+		
+		List<ArticleDTO> pages = mapper.findSearchPage(searchParams);
+		for (ArticleDTO articleDTO : pages) {
+			log.debug("검색된 페이지 정보 : {}", articleDTO);
+		}
 	}
 
 	@AfterEach
