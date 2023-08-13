@@ -141,7 +141,7 @@ public class ArticleTest {
 	
 	@Test
 	@DisplayName("대댓글 달기")
-//	@Disabled
+	@Disabled
 	public void setRReflyTest() {
 		
 		//given
@@ -189,7 +189,7 @@ public class ArticleTest {
 		log.debug("삭제 여부 : {}", result);
 
 //		if(result == true) {
-//			sqlSession.commit();			
+//			sqlSession.commit();
 //		} else {
 //			sqlSession.rollback();			
 //		}

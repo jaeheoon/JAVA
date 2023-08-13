@@ -5,7 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.ezen.mybatis.domain.article.dto.ArticleDTO;
-import com.ezen.mybatis.domain.common.web.PageParams;
+import com.ezen.mybatis.domain.common.web.dto.PageParams;
 
 /**
  * article 테이블 관련 명세
@@ -26,7 +26,7 @@ public interface ArticleMapper {
 	// 요청 페이지, 페이지당 보여지는 목록 갯수에 따른 목록 반환
 	public List<ArticleDTO> findByAll(PageParams pageParams);
 	
-	// 댓글, 대댓글 쓰기, 게시글 상세보기, 게시글 수정, 게시글 삭제 기능 추가하기
+	// 댓글, 대댓글 쓰기, 게시글 상세보기, 게시글 수정, 게시글 삭제 기능 추가하기--------------------------
 	
 	// 댓글 쓰기 기능
 	public void commentCreate(ArticleDTO articleDTO);

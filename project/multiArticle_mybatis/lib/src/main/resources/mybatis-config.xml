@@ -11,6 +11,7 @@
 		<typeAlias type="com.ezen.mybatis.domain.member.dto.Member" alias="Member" />
 		<typeAlias type="com.ezen.mybatis.domain.article.dto.ArticleDTO" alias="ArticleDTO" />
 		<typeAlias type="com.ezen.mybatis.domain.board.dto.BoardDTO" alias="BoardDTO" />
+		<typeAlias type="com.ezen.mybatis.domain.common.web.dto.Pagination" alias="Pagination" />
 	</typeAliases>
 
 	<!-- 다수의 Database에 접근하거나 개발, 테스트, 운영 환경에 맞는 다중 환경 설정 지원 -->
@@ -48,6 +49,7 @@
 		<mapper resource="com/ezen/mybatis/domain/member/mapper/MemberMapper.xml" />
 		<mapper resource="com/ezen/mybatis/domain/article/mapper/ArticleMapper.xml" />
 		<mapper resource="com/ezen/mybatis/domain/board/mapper/BoardMapper.xml" />
+		<mapper resource="com/ezen/mybatis/domain/common/web/mapper/PaginationMapper.xml" />
 	</mappers>
 
 </configuration>

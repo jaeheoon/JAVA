@@ -8,16 +8,15 @@
 	<!-- select 태그를 이용하여 전체 게시글 조회를 위한 SQL 매핑 - 연결 테스트용 -->
 	<select id="findAll" resultType="ArticleDTO">
 		SELECT article_id id,
-		subject,
-		writer,
-		regdate,
-		hitcount,
-		group_no,
-		level_no,
-		order_no
+			subject,
+			writer,
+			regdate,
+			hitcount,
+			group_no,
+			level_no,
+			order_no
 		FROM article
-		WHERE
-		board_id = 10
+		WHERE board_id = 10
 		ORDER BY group_no DESC, order_no ASC
 	</select>
 	
