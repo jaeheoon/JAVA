@@ -90,14 +90,14 @@ public class PageTest {
 	
 	@Test
 	@DisplayName("계층형 게시판 및 페이징 처리를 위한 게시글 목록")
-//	@Disabled
-	void findSearchArticleTest() {
+	@Disabled
+	void findSearchArticleTest(int rows, int boardId) {
 		PaginationMapper mapper = sqlSession.getMapper(PaginationMapper.class);
 		
 		Map<String, Object> searchParams = new HashMap<String, Object>();
 		
-		searchParams.put("rows", 5);
-		searchParams.put("boardId", 20);
+		searchParams.put("rows", rows);
+		searchParams.put("boardId", boardId);
 		
 		List<ArticleDTO> pages = mapper.findSearchArticle(searchParams);
 		for (ArticleDTO articleDTO : pages) {
@@ -105,6 +105,11 @@ public class PageTest {
 		}
 	}
 	
+	@Test
+	@DisplayName("페이징 처리 테스트")
+	void paginationTest() {
+		findSearchArticleTest(5, 20);
+	}
 
 	@AfterEach
 	public void destory() {
