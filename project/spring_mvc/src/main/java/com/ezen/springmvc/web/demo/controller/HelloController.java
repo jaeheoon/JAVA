@@ -16,7 +16,7 @@ public class HelloController {
 //	@GetMapping("/some/*")
 	@GetMapping({"/hello", "/hi"})
 	public String hello(Model model) {
-		String message = "서버로부터 받은 데이터";
+		String message = "서버로부터 받은 <strong>데이터</strong>";
 		model.addAttribute("message", message);
 		return "hello";
 	}

@@ -17,8 +17,13 @@ repositories {
 
 dependencies {
 	// JSP 엔진
-	implementation 'javax.servlet:jstl'
-	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	//implementation 'jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api'
+	//runtimeOnly 'org.glassfish.web:jakarta.servlet.jsp.jstl'
+	//implementation 'org.apache.tomcat.embed:tomcat-embed-jasper'
+	
+	// jsp와 thymeleaf는 같이 사용할 수 없기 때문에 jsp는 주석처리
+	//Thymeleaf 라이브러리
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 	
 	// JUnit5 라이브러리
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.0'
@@ -42,6 +47,10 @@ dependencies {
 
 	// Spring MVC 모듈(스프링 컨테이너 + Sping MVC)
 	implementation 'org.springframework.boot:spring-boot-starter-web'
+	
+	// Jackson 라이브러리
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.14.1'
+	
 	
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'

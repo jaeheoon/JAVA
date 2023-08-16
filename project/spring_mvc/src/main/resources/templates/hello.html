@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>타임리프 사용하기</title>
+</head>
+<body>
+	<!-- /* 인라인 표현식 */ -->
+	<div th:utext="${message}">정적인 html 태그 내용을 model에 있는 내용으로 바꾸기</div>
+	<div> <span>[(${message})]와</span> 기본 메세지</div>
+	
+	<!-- /* 지역변수 사용하기 */ -->
+	<div th:with="a=1, b=20">
+		<span th:text="|${a} + ${b} = ${a + b}|"></span>
+	</div>
+	
+	
+	
+</body>
+</html>
