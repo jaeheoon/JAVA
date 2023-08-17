@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="setContent(content)">
+<head>
+<meta charset="UTF-8">
+<title>템플릿 페이지</title>
+<style>
+* {
+	margin: 0px;
+	padding: 0px;
+}
+
+.header {
+	width: 100vw;
+	height: 20vh;
+	background-color: aqua;
+}
+
+.content {
+	width: 100vw;
+	height: 70vh;
+	background-color: lime;
+}
+
+.footer {
+	width: 100vw;
+	height: 10vh;
+	background-color: green;
+}
+</style>
+</head>
+<body>
+
+	<div class="header">
+		<h1>헤더 영역</h1>
+	</div>
+
+	<div class="content">
+		<th:block th:replace="${content}"></th:block>	<!-- 수정하고 내용을 아예 바꿀때 사용 -->
+		<!-- <th:block th:insert="${content}"></th:block> << 수정하고 추가할때 사용-->
+	</div>
+
+	<div class="footer">
+		<h1>풋터 영역</h1>
+	</div>
+
+</body>
+</th:block>
+</html>

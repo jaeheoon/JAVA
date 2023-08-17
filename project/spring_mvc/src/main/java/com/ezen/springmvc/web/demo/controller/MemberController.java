@@ -38,7 +38,7 @@ public class MemberController {
 //	}
 	
 	@PostMapping("/regist")
-	public String regist(@ModelAttribute Member member, Model model) {
+	public String regist(@ModelAttribute Member2 member, Model model) {
 //		service를 이용한 DB 등록 처리
 		log.info("수신한 사용자 정보 : {}", member);
 		log.info("수신한 사용자 아이디 : {}", member.getId());

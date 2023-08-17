@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>URL 링크 사용하기</title>
+</head>
+<body>
+	<h2>URL 링크</h2>
+	<ul>
+		<li><a href="#" th:href="@{/hello}">Hello 링크 연습</a></li>
+		<li><a href="#" th:href="@{/hello(id = ${id}, name = ${name})}">Param 전달 링크 연습</a></li>
+		<li><a href="#" th:href="@{/member/{id}(id = ${id})}">Path Variable 링크 연습</a></li>
+	</ul>
+	
+	<input type="text" class="text" th:classappend="some">
+	<input type="checkbox" th:checked="true">
+	
+</body>
+</html>

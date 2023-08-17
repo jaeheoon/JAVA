@@ -34,7 +34,7 @@ public class RestMemberController {
 //	회원가입 요청 처리
 	@PostMapping("/register")
 	@ResponseBody
-	public Member register(@RequestBody Member member) {
+	public Member2 register(@RequestBody Member2 member) {
 		log.info(member.toString());
 		// MemberService를 이용한 DB처리 완료 가정 - 마이바티스 사용하여 데이터 가져왔다고 가정
 		return member;
