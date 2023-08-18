@@ -3,7 +3,7 @@
 <mapper namespace="com.ezen.springmvc.domain.member.mapper.MemberMapper">
 
 	<select id="findByAll" resultType="Member">
-		SELECT id, name, email
+		SELECT id, name, email, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
 		FROM member
 	</select>
 	
@@ -14,18 +14,24 @@
 		WHERE id = #{value}
 	</select>
 	
+	<!-- 파라메터 값이 두개로 들어올땐 굳이 파라메터 타입을 지정 안해도 된다 -->
+	<select id="findByIdAndPasswd" resultType="Member">
+		SELECT
+		id, name, email, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
+		FROM member
+		WHERE id = #{id} AND passwd = #{passwd}
+	</select>
+	
 	<select id="findByNameLike" parameterType="string" resultType="Member">
-		SELECT id, name, email
+		SELECT id, name, email, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
 		FROM member
 		WHERE name
 		LIKE '%' || #{value} || '%'
 	</select>
 	
 	<insert id="create" parameterType="Member">
-		INSERT INTO member(id,
-		password, name, email)
-		VALUES(#{id}, #{passwd}, #{name},
-		#{email})
+		INSERT INTO member(id, password, name, email)
+		VALUES(#{id}, #{passwd}, #{name}, #{email})
 	</insert>
 	
 	<update id="update" parameterType="Member">
@@ -36,7 +42,7 @@
 
 	<!-- 동적 SQL 활용 -->
 	<select id="findBySearchType" parameterType="string" resultType="Member">
-		SELECT id, name, email
+		SELECT id, name, email, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
 		FROM member
 		<where>
 			<if test="type != null and type == 'id'">
@@ -50,21 +56,24 @@
 	
 	<select id="findBySearchAll" parameterType="string"
 		resultType="Member">
-		SELECT id, name, email
+		SELECT id, name, email, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
 		FROM member
 		WHERE
 		id = #{value} OR name LIKE '%' || #{value} || '%'
 	</select>
 
 	<select id="findBySearchAllOption" parameterType="MemberSearchCondition" resultType="Member">
-		SELECT id, name, email
+		SELECT id, name, email, TO_CHAR(regdate, 'yyyy-MM-DD HH24:MI:SS') regdate
 		FROM member
 		<where>
 			<if test="memberId != null and memberId != ''">
-				or id = #{id}
+				or id = #{memberId}
 			</if>
 			<if test="name != null and name != ''">
 				or name LIKE '%' || #{name} || '%'
+			</if>
+			<if test="email != null and email != ''">
+				or email = #{email} 
 			</if>
 		</where>
 	</select>

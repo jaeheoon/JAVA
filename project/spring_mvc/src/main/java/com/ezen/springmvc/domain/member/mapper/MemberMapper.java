@@ -14,6 +14,8 @@ public interface MemberMapper {
 	public List<Member> findByAll();
 
 	public Member findById(String id);
+	
+	public Member findByIdAndPasswd(@Param("id") String id, @Param("passwd") String passwd);
 
 	public List<Member> findByNameLike(String name);
 
