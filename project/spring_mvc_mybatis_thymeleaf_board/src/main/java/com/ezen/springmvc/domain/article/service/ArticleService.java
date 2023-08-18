@@ -1,7 +1,5 @@
 package com.ezen.springmvc.domain.article.service;
 
-import java.util.List;
-
 import com.ezen.springmvc.domain.article.dto.Article;
 
 /**
@@ -10,8 +8,22 @@ import com.ezen.springmvc.domain.article.dto.Article;
  */
 public interface ArticleService {
 	
+	/** 게시글 등록*/
 	public void register(Article article);
-	public List<Article> getArticleList();
-	public Article getArticle(int id);
+	
+	/** 게시글 댓글 등록 */
+	public void commentCreate(Article article);
+	
+	/** 게시글 대댓글 등록 */
+	public void setRRefly(Article article);
+	
+	/** 게시글 삭제*/
+	public void deleteArticle(int articleId, String passwd);
+	
+	/** 게시글 수정*/
+	public void updateArticle(Article article);
+	
+	/** 게시글 상세 정보 출력*/
+	public Article readArticle(int articleId);
 	
 }

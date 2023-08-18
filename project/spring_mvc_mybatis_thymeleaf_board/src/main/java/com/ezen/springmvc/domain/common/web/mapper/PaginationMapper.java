@@ -3,8 +3,11 @@ package com.ezen.springmvc.domain.common.web.mapper;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.annotations.Mapper;
+
 import com.ezen.springmvc.domain.article.dto.Article;
 
+@Mapper
 public interface PaginationMapper {
 	/** 게시판 전체 갯수 출력 */
 	public int findAllCount();

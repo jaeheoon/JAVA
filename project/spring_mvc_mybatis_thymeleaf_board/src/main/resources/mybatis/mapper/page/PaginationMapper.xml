@@ -9,7 +9,7 @@
 		SELECT count(article_id) totalPages
 		FROM article
 	</select>
-
+	
 	<!-- 검색된 게시글 갯수 -->
 	<select id="findSearchCount" parameterType="map" resultType="int">
 		SELECT COUNT(article_id) totalPages
@@ -57,16 +57,16 @@
       	  	   regdate, 
         	   hitcount 
 		FROM   (SELECT CEIL(rownum / #{rows}) requestPage, 
-               subject, 
-               writer, 
-               TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate, 
-               hitcount 
+               								  subject, 
+               								  writer, 
+               								  TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate, 
+               								  hitcount 
             FROM   (SELECT subject, 
                            writer, 
                            regdate, 
                            hitcount 
                     FROM   article 
-                    WHERE  board_id = #{boardId}
+                    WHERE  board_id = #{boardId} 
                     ORDER  BY group_no DESC, 
                               order_no ASC)) 
 		WHERE  requestPage = 1

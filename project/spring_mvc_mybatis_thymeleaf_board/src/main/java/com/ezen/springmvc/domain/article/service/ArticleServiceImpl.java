@@ -1,7 +1,5 @@
 package com.ezen.springmvc.domain.article.service;
 
-import java.util.List;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,7 +9,7 @@ import com.ezen.springmvc.domain.article.mapper.ArticleMapper;
 import lombok.RequiredArgsConstructor;
 
 /**
- * 게시판 관련 비즈니스 로직 처리 및 트랜잭션 관리 구현체
+ * 게시글 관련 비즈니스 로직 처리 및 트랜잭션 관리 구현체
  * @author 홍재헌
  */
 @RequiredArgsConstructor
@@ -28,13 +26,33 @@ public class ArticleServiceImpl implements ArticleService {
 	}
 
 	@Override
-	public List<Article> getArticleList() {
-		return articleMapper.findAll();
+	@Transactional
+	public void deleteArticle(int articleId, String passwd) {
+		articleMapper.deleteArticle(articleId, passwd);
 	}
 
 	@Override
-	public Article getArticle(int id) {
-		return null;
+	@Transactional
+	public void updateArticle(Article article) {
+		articleMapper.updateArticle(article);
+	}
+
+	@Override
+	@Transactional
+	public void commentCreate(Article article) {
+		articleMapper.commentCreate(article);
+	}
+
+	@Override
+	@Transactional
+	public void setRRefly(Article article) {
+		articleMapper.updateOrderNo(article.getArticleId(), article.getBoardId());
+		articleMapper.setRRefly(article);
+	}
+
+	@Override
+	public Article readArticle(int articleId) {
+		return articleMapper.readArticle(articleId);
 	}
 
 }

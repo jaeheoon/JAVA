@@ -31,18 +31,23 @@ public interface ArticleMapper {
 	// 댓글, 대댓글 쓰기, 게시글 상세보기, 게시글 수정, 게시글 삭제 기능 추가하기--------------------------
 	
 	// 댓글 쓰기 기능
-	public void commentCreate(Article articleDTO);
+	public void commentCreate(Article article);
 	
 	//대댓글 적기 전 선택된게시판 id와 해당하는 글의 id를 받아와 order_no 증가
 	public boolean updateOrderNo(@Param("articleId") int articleId, @Param("boardId") int boardId);
 	
 	// 대댓글 쓰기 기능
-	public boolean setRRefly(Article articleDTO);
+	public boolean setRRefly(Article article);
 	
 	//해당 그룹 모든 글
-	public List<Article> readArticle(int groupNo);
+	public List<Article> readGroupArticle(int groupNo);
+	
+	//id로 게시글 상세정보 찾기
+	public Article readArticle(int articleId);
 	
 	// Article id 받아서 삭제
-	public boolean deleteArticle(@Param("passwd") String passwd, @Param("articleId") int articleId);
+	public boolean deleteArticle(@Param("articleId") int articleId, @Param("passwd") String passwd);
 	
+	// 댓글 수정 기능
+	public void updateArticle(Article article);
 }
