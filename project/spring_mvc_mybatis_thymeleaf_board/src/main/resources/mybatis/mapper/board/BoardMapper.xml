@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ezen.springmvc.domain.board.mapper.BoardMapper">
+
+	<!-- select 태그를 이용하여 전체 게시판 조회를 위한 SQL 매핑 -->
+	<select id="findAll" resultType="Board">
+		SELECT board_id id, category, title, description
+		FROM board
+		ORDER BY board_id
+	</select>
+	
+	<!-- select 태그를 이용하여 검색 게시판 조회를 위한 SQL 매핑 -->
+	<select id="findById" parameterType="int" resultType="Board">
+		SELECT board_id id, category, title, description
+		FROM board
+		WHERE board_id = #{id}
+	</select>
+	
+	<update id="update" parameterType="Board">
+		UPDATE board
+		<set>
+			<if test="title != null">title = #{title}, </if>
+			<if test="description != null">description = #{description} </if>
+		</set>
+		WHERE board_id = #{id}
+	</update>
+	
+	<!-- 게시판 등록 -->
+	<insert id="create" parameterType="Board">
+		INSERT INTO board(
+			board_id,
+			category,
+			title,
+			description)
+		VALUES (
+			board_id_seq.NEXTVAL,
+			#{category},
+			#{title},
+			#{description})
+	</insert>
+
+</mapper>
