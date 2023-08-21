@@ -25,18 +25,19 @@ public class ArticleMapperTest {
 	@Test
 	@Disabled
 	@DisplayName("전체 게시글 목록 반환")
-	public void findAllTest() {
-		List<Article> list = articleMapper.findAll();
+	public void readGroupArticleTest() {
+		int boardId = 10;
+		List<Article> list = articleMapper.findAll(boardId);
 		for (Article article : list) {
 			log.info(article.toString());
 		}
 	};
 	
 	@Test
-	@Disabled
+//	@Disabled
 	@DisplayName("id로 게시글 상세정보 찾기")
 	public void readArticleTest() {
-		Article article = articleMapper.readArticle(1);
+		Article article = articleMapper.readArticle(10, 10);
 		log.info(article.toString());
 	};
 	

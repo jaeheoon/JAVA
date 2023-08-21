@@ -22,7 +22,7 @@ public class BoardMapperTest {
 	private BoardMapper boardMapper;
 	
 	@Test
-	@Disabled
+//	@Disabled
 	public void findAllTest() {
 		List<Board> list = boardMapper.findAll();
 		for (Board board : list) {
@@ -31,7 +31,7 @@ public class BoardMapperTest {
 	};
 	
 	@Test
-//	@Disabled
+	@Disabled
 	public void findByIdTest() {
 		Board board = boardMapper.findById(70);
 		log.info("검색된 게시판 정보 : {}", board);

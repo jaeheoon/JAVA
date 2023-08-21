@@ -4,6 +4,7 @@
 <!-- 네임스페이스(사용영역) 설정 -->
 <mapper namespace="com.ezen.springmvc.domain.article.mapper.ArticleMapper">
 	<!-- select 태그를 이용하여 전체 게시글 조회를 위한 SQL 매핑 - 연결 테스트용 -->
+	<!-- 해당 게시판의 모든 게시글 -->
 	<select id="findAll" resultType="Article">
 		SELECT article_id articleId,
 			board_id boardId,
@@ -16,11 +17,11 @@
 			level_no,
 			order_no
 		FROM article
-		WHERE board_id = 10
+		WHERE board_id = #{boardId}
 		ORDER BY group_no DESC, order_no ASC
 	</select>
 	
-	<!-- 해당 그룹의 모든 글 -->
+	<!-- 해당 게시글의 모든 댓글 -->
 	<select id="readGroupArticle" parameterType="int" resultType="Article">
 		SELECT article_id articleId,
 			board_id boardId,
@@ -38,7 +39,7 @@
 	</select>
 	
 	<!-- id로 게시글 상세정보 찾기 -->
-	<select id="readArticle" parameterType="int" resultType="Article">
+	<select id="readArticle" resultType="Article">
 		SELECT article_id articleId,
 			board_id boardId,
 			subject,
@@ -50,7 +51,7 @@
 			level_no,
 			order_no
 		FROM article
-		WHERE article_id=#{articleId}
+		WHERE article_id=#{articleId} AND board_id=#{boardId}
 	</select>
 
 	<!-- 게시글 등록 -->
@@ -153,6 +154,6 @@
 	<delete id="deleteArticle">
 		DELETE 
   		FROM article
- 		WHERE passwd = #{passwd} AND article_Id = #{articleId}
+ 		WHERE passwd = #{passwd} AND article_Id = #{articleId} AND group_no = #{groupId}
 	</delete>
 </mapper>

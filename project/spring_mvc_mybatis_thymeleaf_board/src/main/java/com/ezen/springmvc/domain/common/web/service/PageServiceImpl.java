@@ -3,10 +3,10 @@ package com.ezen.springmvc.domain.common.web.service;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
-import com.ezen.springmvc.domain.board.dto.Board;
+import com.ezen.springmvc.domain.article.dto.Article;
 import com.ezen.springmvc.domain.common.web.mapper.PaginationMapper;
+import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 
 import lombok.RequiredArgsConstructor;
 
@@ -19,6 +19,21 @@ import lombok.RequiredArgsConstructor;
 public class PageServiceImpl implements PageService {
 	
 	private final PaginationMapper paginationMapper;
+	
+	@Override
+	public int findAllCount() {
+		return paginationMapper.findAllCount();
+	}
+
+	@Override
+	public List<Article> findSearchPage() {
+		return null;
+	}
+
+	@Override
+	public List<Article> findSearchArticle() {
+		return null;
+	}
 
 	
 	

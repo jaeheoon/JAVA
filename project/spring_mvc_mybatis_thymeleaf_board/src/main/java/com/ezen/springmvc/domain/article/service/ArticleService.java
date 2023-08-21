@@ -1,5 +1,7 @@
 package com.ezen.springmvc.domain.article.service;
 
+import java.util.List;
+
 import com.ezen.springmvc.domain.article.dto.Article;
 
 /**
@@ -24,6 +26,9 @@ public interface ArticleService {
 	public void updateArticle(Article article);
 	
 	/** 게시글 상세 정보 출력*/
-	public Article readArticle(int articleId);
+	public Article readArticle(int boardId, int articleId);
+	
+	/** 해당 게시판 게시글 리스트 출력 */
+	public List<Article> readAllArticle(int boardId);
 	
 }

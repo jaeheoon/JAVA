@@ -17,7 +17,7 @@ public interface ArticleMapper {
 	public void create(Article article);
 	
 	/** 전체 게시글 목록 반환 - 필요없지만 연습용 */
-	public List<Article> findAll();
+	public List<Article> findAll(@Param("boardId") int boardId);
 	
 	// 페이징 계산에 필요한 게시글 전체 갯수 반환 - 전체 글 갯수 - 필요없지만 연습용
 	public int getCount();
@@ -43,7 +43,7 @@ public interface ArticleMapper {
 	public List<Article> readGroupArticle(int groupNo);
 	
 	//id로 게시글 상세정보 찾기
-	public Article readArticle(int articleId);
+	public Article readArticle(@Param("boardId") int boardId, @Param("articleId") int articleId);
 	
 	// Article id 받아서 삭제
 	public boolean deleteArticle(@Param("articleId") int articleId, @Param("passwd") String passwd);
