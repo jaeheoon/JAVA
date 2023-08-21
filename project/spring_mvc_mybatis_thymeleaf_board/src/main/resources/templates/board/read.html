@@ -17,7 +17,7 @@
 					<h1 class="mt-4">게시글 상세</h1>
 					<hr>
 					<div class="form-group">
-						<label>게시글 번호</label> 
+						<label>게시글 번호</label>
 						<input type="text" class="form-control" readonly th:attrappend="value=${article.articleId}">
 					</div>
 
@@ -40,9 +40,10 @@
 						<label>등록일자</label> <input type="text" class="form-control" name="regDate" th:attrappend="value=${article.regdate}" readonly>
 					</div>
 
-					<a href="#">
+					<a href="#"> 
 						<button type="button" class="btn btn-primary">수정</button>
-					</a> <a href="#">
+					</a> 
+					<a href="#" th:href="@{/board}">
 						<button type="button" class="btn btn-info">목록</button>
 					</a>
 				</div>

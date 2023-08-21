@@ -52,7 +52,7 @@
 				<tbody>
 					<tr th:each="article, state : ${list}">
 						<th scope="row" th:text="${state.count}">1</th>
-						<td><a href="#" th:text="${article.subject}" th:href="|@{/board/}${article.articleId}|">게시글 제목입니다.</a></td>
+						<td><a href="#" th:text="${article.subject}" th:href="@{/board/{articleId}(articleId=${article.articleId}, boardId=${article.boardId})}" >게시글 제목입니다.</a></td>
 						<td th:text="${article.writer}">홍길동</td>
 						<td th:text="${article.hitcount}">5</td>
 						<td th:text="${article.regdate}">2023-05-05</td>

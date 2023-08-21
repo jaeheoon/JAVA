@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.ezen.springmvc.domain.article.dto.Article;
 import com.ezen.springmvc.domain.common.web.mapper.PaginationMapper;
-import com.ezen.springmvc.domain.member.mapper.MemberMapper;
 
 import lombok.RequiredArgsConstructor;
 
