@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:replace="~{/layout/layoutV1 :: setContent(~{this :: title}, ~{this :: content})}"> 
+	
+	<title th:fragment="title">:: 게시판 목록 ::</title>
+	
+	<div class="container-fluid" th:fragment="content">
+		임시 게시판 목록 입니다...
+	</div>
+
+</th:block>
+
+</html>
+
+
+
+
+
+
+
+
+
