@@ -135,7 +135,12 @@ public class Pagination {
 	
 	/** 테스트을 위한 main */
 	public static void main(String[] args) {
-		PageParams params = new PageParams(5, 5, 15, 501);
+		PageParams params = PageParams.builder()
+			.elementSize(10)
+			.pageSize(5)
+			.requestPage(1)
+			.rowCount(58)
+			.build();
 		Pagination pagination = new Pagination(params);
 		
 		System.out.println("검색된 행수: " + params.getRowCount());

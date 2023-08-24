@@ -4,25 +4,34 @@
 <!-- 네임스페이스(사용영역) 설정 -->
 <mapper namespace="com.ezen.springmvc.domain.common.web.mapper.PaginationMapper">
 
-	<!-- 게시판 전체 게시글 갯수 -->
-	<select id="findAllCount" resultType="int">
-		SELECT count(article_id) totalPages
-		FROM article
-	</select>
-	
 	<!-- 검색된 게시글 갯수 -->
 	<select id="findSearchCount" parameterType="map" resultType="int">
 		SELECT COUNT(article_id) totalPages
 		FROM article
 		<if test="type != null">
 			<choose>
-				<when test="type == 'id'">
-					WHERE board_id = #{boardId}
+				<when test="type == 'subject'">
+					WHERE board_id = #{boardId} AND
+					subject LIKE '%' || ${value} || '%'
+				</when>
+				<when test="type == 'content'">
+					WHERE board_id = #{boardId} AND
+					content LIKE '%' || ${value} || '%'
 				</when>
 				<when test="type == 'name'">
-					WHERE writer = '%' || #{value} || '%'
+					WHERE board_id = #{boardId} AND
+					name LIKE '%' || ${value} || '%'
+				</when>
+				<when test="type == 'titleContent'">
+					WHERE board_id = #{boardId} AND
+					(subject LIKE '%' || #{value} || '%'
+					OR content LIKE '%' || #{value} || '%')
+				</when>
+				<when test="type == 'all'">
+					WHERE board_id = #{boardId} AND
+					(writer LIKE '%' || #{value} || '%'
 					OR subject LIKE '%' || #{value} || '%'
-					OR content LIKE '%' || #{value} || '%'
+					OR content LIKE '%' || #{value} || '%')
 				</when>
 			</choose>
 		</if>
@@ -30,7 +39,8 @@
 	
 	<!-- 페이징 처리를 위한 글 정보 출력 -->
 	<select id="findSearchPage" parameterType="map" resultType="Article">
-		SELECT article_id "articleId",
+		SELECT article_id articleId,
+			   board_id boardId,
 			   subject, 
       		   writer, 
         	   regdate, 
@@ -38,13 +48,28 @@
 		FROM article
 		<if test="type != null">
 			<choose>
-				<when test="type == 'id'">
-					WHERE board_id = #{boardId}
+				<when test="type == 'subject'">
+					WHERE board_id = #{boardId} AND
+					subject LIKE '%' || ${value} || '%'
+				</when>
+				<when test="type == 'content'">
+					WHERE board_id = #{boardId} AND
+					content LIKE '%' || ${value} || '%'
 				</when>
 				<when test="type == 'name'">
-					WHERE writer = '%' || #{value} || '%'
+					WHERE board_id = #{boardId} AND
+					name LIKE '%' || ${value} || '%'
+				</when>
+				<when test="type == 'titleContent'">
+					WHERE board_id = #{boardId} AND
+					(subject LIKE '%' || #{value} || '%'
+					OR content LIKE '%' || #{value} || '%')
+				</when>
+				<when test="type == 'all'">
+					WHERE board_id = #{boardId} AND
+					(writer LIKE '%' || #{value} || '%'
 					OR subject LIKE '%' || #{value} || '%'
-					OR content LIKE '%' || #{value} || '%'
+					OR content LIKE '%' || #{value} || '%')
 				</when>
 			</choose>
 		</if>
@@ -53,15 +78,21 @@
 	<!-- 계층형 게시판 및 페이징 처리를 위한 게시글목록 출력 -->
 	<select id="findSearchArticle" parameterType="map" resultType="Article">
 		SELECT subject, 
-     	  	   writer, 
-      	  	   regdate, 
-        	   hitcount 
-		FROM   (SELECT CEIL(rownum / #{rows}) requestPage, 
-               								  subject, 
-               								  writer, 
-               								  TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate, 
-               								  hitcount 
+			   board_id,
+			   article_id,
+     	 	   writer, 
+      	 	   regdate, 
+               hitcount 
+		FROM   (SELECT CEIL(rownum / 10) requestPage, 
+                               			 board_id,
+                              			 article_id,
+               							 subject, 
+               							 writer, 
+               							 TO_CHAR(regdate, 'YYYY-MM-DD HH24:MI') regdate, 
+               							 hitcount 
             FROM   (SELECT subject, 
+                           board_id,
+			               article_id,
                            writer, 
                            regdate, 
                            hitcount 
@@ -69,7 +100,7 @@
                     WHERE  board_id = #{boardId} 
                     ORDER  BY group_no DESC, 
                               order_no ASC)) 
-		WHERE  requestPage = 1
+		WHERE  requestPage = #{requestPage}
 	</select>
 	
 </mapper>

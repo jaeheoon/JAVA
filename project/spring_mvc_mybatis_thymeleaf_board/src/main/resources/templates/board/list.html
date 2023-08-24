@@ -1,9 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko" xmlns:th="http://www.thymeleaf.org">
 
-<th:block
-	th:replace="~{layout/layoutV1 :: setContent(~{this :: title}, ~{this :: content})}">
-
+<th:block th:replace="~{layout/layoutV1 :: setContent(~{this :: title}, ~{this :: content})}">
 	<th:block th:fragment="title">
 		<title>게시판 목록</title>
 	</th:block>
@@ -18,22 +16,22 @@
 			</h2>
 
 			<hr>
-			<form action="#" method="get" id="searchForm">
+			<form action="#" method="post" id="searchForm" th:action="@{/board/10}">
 				<div class="input-group">
 					<input type="hidden" name="page" value="1">
 					<div class="input-group-prepend">
 						<select class="custom-select" name="type">
 							<option selected>----- 검색유형 -----</option>
-							<option>제목</option>
-							<option>내용</option>
-							<option>작성자</option>
-							<option>제목 + 내용</option>
-							<option>제목 + 내용 + 작성자</option>
+							<option value="t">제목</option>
+							<option value="c">내용</option>
+							<option value="w">작성자</option>
+							<option value="tc">제목 + 내용</option>
+							<option value="tcw">제목 + 내용 + 작성자</option>
 						</select>
 					</div>
 					<input type="search" class="form-control" name="value">
 					<div class="input-group-append" id="button-addon4">
-						<button class="btn btn-success btn-search" type="button">검색</button>
+						<button class="btn btn-success btn-search" type="submit">검색</button>
 					</div>
 				</div>
 			</form>
@@ -52,7 +50,7 @@
 				<tbody>
 					<tr th:each="article, state : ${list}">
 						<th scope="row" th:text="${state.count}">1</th>
-						<td><a href="#" th:text="${article.subject}" th:href="@{/board/{articleId}(articleId=${article.articleId}, boardId=${article.boardId})}" >게시글 제목입니다.</a></td>
+						<td><a href="#" th:text="${article.subject}" th:href="@{/board/read/{boardId}(articleId=${article.articleId}, boardId=${article.boardId})}" >게시글 제목입니다.</a></td>
 						<td th:text="${article.writer}">홍길동</td>
 						<td th:text="${article.hitcount}">5</td>
 						<td th:text="${article.regdate}">2023-05-05</td>

@@ -1,6 +1,8 @@
 package com.ezen.springmvc.domain.common.web.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.stereotype.Service;
 
@@ -18,22 +20,26 @@ import lombok.RequiredArgsConstructor;
 public class PageServiceImpl implements PageService {
 	
 	private final PaginationMapper paginationMapper;
-	
+
+//	검색된 게시판 게시글 목록 출력
 	@Override
-	public int findAllCount() {
-		return paginationMapper.findAllCount();
+	public List<Article> pageList(int rows, int boardId, int page) {
+		
+		Map<String, Object> searchParams = new HashMap<String, Object>();
+		
+		searchParams.put("rows", rows);
+		searchParams.put("boardId", boardId);
+		searchParams.put("requestPage", page);
+		
+		List<Article> pages = paginationMapper.findSearchArticle(searchParams);
+		return pages;
 	}
 
 	@Override
-	public List<Article> findSearchPage() {
-		return null;
+	public int pageCount() {
+		
+		return 0;
 	}
-
-	@Override
-	public List<Article> findSearchArticle() {
-		return null;
-	}
-
 	
-	
+
 }

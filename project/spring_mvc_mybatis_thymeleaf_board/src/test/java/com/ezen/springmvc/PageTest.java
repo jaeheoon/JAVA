@@ -24,17 +24,11 @@ public class PageTest {
 
 	@Test
 	@Disabled
-	@DisplayName("전체 게시판 갯수")
-	void findAllCountTest() {
-		log.info("==================== 전체 게시판 조회 ========================");
-		int count = paginationMapper.findAllCount();
-		log.info("전체 게시판 갯수는 : {}", count);
-	}
-	
-	@Test
-	@Disabled
 	@DisplayName("검색 게시판 갯수")
-	void findSearchCountTest(String type, String searchPage) {
+	void findSearchCountTest() {
+		String type = "all";
+		String searchPage = "tuesday";
+		int boardId = 20;
 		log.info("==================== 검색 게시판 조회 ========================");
 		
 		Map<String, Object> searchParams = new HashMap<String, Object>();
@@ -43,6 +37,8 @@ public class PageTest {
 		
 		searchParams.put("type", type);
 		searchParams.put("value", searchPage);
+		searchParams.put("boardId", boardId);
+		
 		int count = paginationMapper.findSearchCount(searchParams);
 		log.info("검색 게시판 갯수는 : {}", count);
 	}
@@ -50,14 +46,17 @@ public class PageTest {
 	@Test
 	@DisplayName("검색된 페이지 정보")
 	@Disabled
-	void findSearchPageTest(String type, String searchPage) {
-		
+	void findSearchPageTest() {
+		String type = "all";
+		String searchPage = "tuesday";
+		int boardId = 20;
 		Map<String, Object> searchParams = new HashMap<String, Object>();
 //		searchParams.put("type", type);
 //		searchParams.put("value", Integer.valueOf(searchPage));
 
 		searchParams.put("type", type);
 		searchParams.put("value", searchPage);
+		searchParams.put("boardId", boardId);
 		
 		List<Article> pages = paginationMapper.findSearchPage(searchParams);
 		for (Article article : pages) {
@@ -68,23 +67,22 @@ public class PageTest {
 	@Test
 	@DisplayName("계층형 게시판 및 페이징 처리를 위한 게시글 목록")
 	@Disabled
-	void findSearchArticleTest(int rows, int boardId) {
-		
+	void findSearchArticleTest() {
+//		게시글을 몇개씩 볼건지
+		int rows = 10;
+//		어디 게시판에서 볼건지
+		int boardId = 10;
+//		선택한 게시글 목록 번호
+		int page = 1;
 		Map<String, Object> searchParams = new HashMap<String, Object>();
 		
 		searchParams.put("rows", rows);
 		searchParams.put("boardId", boardId);
+		searchParams.put("requestPage", page);
 		
 		List<Article> pages = paginationMapper.findSearchArticle(searchParams);
 		for (Article article : pages) {
 			log.info("검색된 계층형 페이지 정보 : {}", article);
 		}
-	}
-	
-	@Test
-	@Disabled
-	@DisplayName("페이징 처리 테스트")
-	void paginationTest() {
-		findSearchArticleTest(5, 20);
 	}
 }
