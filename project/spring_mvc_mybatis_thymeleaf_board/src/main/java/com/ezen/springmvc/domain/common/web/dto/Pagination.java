@@ -8,7 +8,6 @@ public class Pagination {
 	
 	// 페이징 계산에 필요한 필드
 	private PageParams params;        /** 여러개의 파라메터 포장 */
-// 	private int totalElements;        /** 테이블로부터 조회된 행의 수 */
 	
 	// 계산 결과 저장을 위한 필드
 	private int totalPages;           /** 전체 페이지 수 */

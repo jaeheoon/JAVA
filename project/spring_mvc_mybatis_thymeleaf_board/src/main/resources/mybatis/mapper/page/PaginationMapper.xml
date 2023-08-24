@@ -83,7 +83,7 @@
      	 	   writer, 
       	 	   regdate, 
                hitcount 
-		FROM   (SELECT CEIL(rownum / 10) requestPage, 
+		FROM   (SELECT CEIL(rownum / #{rows}) requestPage, 
                                			 board_id,
                               			 article_id,
                							 subject, 
@@ -101,6 +101,13 @@
                     ORDER  BY group_no DESC, 
                               order_no ASC)) 
 		WHERE  requestPage = #{requestPage}
+	</select>
+	
+	<!-- 계층형 게시판 및 페이징 처리를 위한 게시글 갯수 출력 -->
+	<select id="findArticleCount" parameterType="map" resultType="int">
+		SELECT count(board_id)
+		FROM article
+		WHERE  board_id = #{boardId}
 	</select>
 	
 </mapper>

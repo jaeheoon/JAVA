@@ -60,17 +60,24 @@
 			</table>
 
 			<ul class="pagination h-100 justify-content-center align-items-center">
-				<li class="page-item"><a class="page-link">처음으로</a></li>
-				<li class="page-item"><a class="page-link">이전목록</a></li>
-
-				<li class="page-item active"><a class="page-link" href="#">1</a></li>
-				<li class="page-item"><a class="page-link" href="#">2</a></li>
-				<li class="page-item"><a class="page-link" href="#">3</a></li>
-				<li class="page-item"><a class="page-link" href="#">4</a></li>
-				<li class="page-item"><a class="page-link" href="#">5</a></li>
-
-				<li class="page-item"><a class="page-link">다음목록</a></li>
-				<li class="page-item"><a class="page-link">끝으로</a></li>
+				<th:block th:if="${pagination.isShowFirst}">
+					<li class="page-item"><a class="page-link" th:href="@{'/'+board+'/'+ ${boardId}+'?'+requestPage+'=' + 1 }">처음으로</a></li>
+				</th:block>
+				<th:block th:if="${pagination.isShowPrevious}">
+					<li class="page-item"><a class="page-link" th:href="@{'/'+board+'/'+ ${boardId}+'?'+requestPage+'=' + ${pagination.previousStartPage}}">이전목록</a></li>
+				</th:block>
+				
+				<th:block th:each="i : ${#numbers.sequence(pagination.startPage, pagination.endPage)}">
+					<li class="page-item active" th:class="${i == pagination.params.requestPage} ? 'page-item active' : 'page-item'">
+					<a class="page-link" href="#" th:href="@{'/'+board+'/'+ ${boardId}+'?'+requestPage+'='+${i}}" th:text="${i}">1</a></li>
+				</th:block>
+		
+				<th:block th:if="${pagination.isShowNext}">
+					<li class="page-item"><a class="page-link" th:href="@{'/'+board+'/'+ ${boardId}+'?'+requestPage+'=' + ${pagination.nextStartPage}}">다음목록</a></li>
+				</th:block>
+				<th:block th:if="${pagination.isShowLast}">
+					<li class="page-item"><a class="page-link" th:href="@{'/'+board+'/'+ ${boardId}+'?'+requestPage+'=' + ${pagination.totalPages}}">끝으로</a></li>
+				</th:block>
 			</ul>
 	</th:block>
 </html>

@@ -17,4 +17,7 @@ public interface PaginationMapper {
 
 	/** 계층형 게시판 및 페이징 처리를 위한 게시글목록 조회 */
 	public List<Article> findSearchArticle(Map<String, Object> searchArticle);
+	
+	/** 계층형 게시판 및 페이징 처리를 위한 게시글 갯수 출력 */
+	public int findArticleCount(int boardId);
 }
