@@ -59,6 +59,7 @@ public class BoardMapperTest {
 							.title("게시판 제목 테스트")
 							.description("게시판 내용 테스트")
 							.build();
+		
 		boardMapper.create(board);
 		log.info("신규 게시판 등록 완료 : {}", board);
 		assertThat(board)

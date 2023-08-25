@@ -33,7 +33,7 @@ public class PageServiceImpl implements PageService {
 		searchParams.put("boardId", boardId);
 		searchParams.put("requestPage", pageParams.getRequestPage());
 		
-		List<Article> pages = paginationMapper.findSearchArticle(searchParams);
+		List<Article> pages = paginationMapper.findArticleSearch(searchParams);
 		
 		return pages;
 	}
@@ -41,6 +41,32 @@ public class PageServiceImpl implements PageService {
 	@Override
 	public int pageCount(int boardId) {
 		return paginationMapper.findArticleCount(boardId);
+	}
+
+	@Override
+	public List<Article> pageSearchList(PageParams pageParams, String searchType, String searchValue, int boardId) {
+		
+		Map<String, Object> searchParams = new HashMap<String, Object>();
+		
+		searchParams.put("rows", pageParams.getElementSize());
+		searchParams.put("boardId", boardId);
+		searchParams.put("requestPage", pageParams.getRequestPage());
+		
+		List<Article> pages = paginationMapper.findSearchPage(searchParams);
+		
+		return pages;
+	}
+	
+	@Override
+	public int pageSearchCount(String searchType, String searchValue, int boardId) {
+		
+		Map<String, Object> searchParams = new HashMap<String, Object>();
+		
+		searchParams.put("type", searchType);
+		searchParams.put("value", searchValue);
+		searchParams.put("boardId", boardId);
+		
+		return paginationMapper.findSearchCount(searchParams);
 	}
 	
 

@@ -81,7 +81,7 @@ public class PageMapperTest {
 		searchParams.put("boardId", boardId);
 		searchParams.put("requestPage", page);
 		
-		List<Article> pages = paginationMapper.findSearchArticle(searchParams);
+		List<Article> pages = paginationMapper.findSearchPage(searchParams);
 		
 		for (Article article : pages) {
 			log.info("검색된 계층형 페이지 정보 : {}", article);

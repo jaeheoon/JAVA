@@ -16,4 +16,10 @@ public interface PageService {
 	/** 검색된 게시판 게시글 목록 출력 */
 	public List<Article> pageList(PageParams pageParams, int boardId);
 	
+	/** 검색된 게시판 갯수 */
+	public int pageSearchCount(String searchType, String searchValueint, int boardId);
+	
+	/** 검색 게시판 목록 출력 */
+	public List<Article> pageSearchList(PageParams pageParams, String searchType, String searchValueint, int boardId);
+	
 }

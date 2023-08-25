@@ -39,7 +39,7 @@
 	
 	<!-- 페이징 처리를 위한 글 정보 출력 -->
 	<select id="findSearchPage" parameterType="map" resultType="Article">
-		SELECT article_id articleId,
+		SELECT article_id articleId, 
 			   board_id boardId,
 			   subject, 
       		   writer, 
@@ -76,7 +76,7 @@
 	</select>
 	
 	<!-- 계층형 게시판 및 페이징 처리를 위한 게시글목록 출력 -->
-	<select id="findSearchArticle" parameterType="map" resultType="Article">
+	<select id="findArticleSearch" parameterType="map" resultType="Article">
 		SELECT subject, 
 			   board_id,
 			   article_id,
