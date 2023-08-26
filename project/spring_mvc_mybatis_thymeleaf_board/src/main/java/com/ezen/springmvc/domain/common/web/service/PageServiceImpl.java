@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 
 import com.ezen.springmvc.domain.article.dto.Article;
 import com.ezen.springmvc.domain.common.web.dto.PageParams;
-import com.ezen.springmvc.domain.common.web.dto.Pagination;
 import com.ezen.springmvc.domain.common.web.mapper.PaginationMapper;
 
 import lombok.RequiredArgsConstructor;
