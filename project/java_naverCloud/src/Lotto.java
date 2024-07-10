@@ -1,4 +1,4 @@
-package array;
+package homework;
 
 import java.util.Arrays;
 import java.util.Scanner;
@@ -19,19 +19,21 @@ public class Lotto {
 		money = sc.nextInt();
 		for (int k = 0; k < money/1000; k++) {
 			for (int i = 0; i < lotto.length; i++) {
-				while(true) {
+				while (true) {
 					int count = 0;
-					random = (int) ((Math.random()*45) + 1);
+					random = (int) ((Math.random() * 45) + 1);
 					for (int j = 0; j <= i; j++) {
-						if (random == lotto[j]) count++;
+						if (random == lotto[j])
+							count++;
 					}
-					if(count == 0) break;
+					if (count == 0)
+						break;
 				}
 				lotto[i] = random;
 			}
 			Arrays.sort(lotto);
 			for (int i = 0; i < lotto.length; i++) {
-				System.out.print(lotto[i] + "\t");
+				System.out.print(String.format("%5d", lotto[i]));
 			}
 			System.out.println();
 			som++;

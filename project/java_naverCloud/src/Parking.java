@@ -1,9 +1,8 @@
-package array;
+package homework;
 
 import java.util.Scanner;
 
 /**
- * 24.07.09(화) 배열 정렬 숙제
  * 주차장 관리 프로그램
  * @author 홍재헌
  *
@@ -31,7 +30,7 @@ public class Parking {
 				case 1: 
 					System.out.println("위치 입력 : ");
 					loc = sc.nextInt();
-					if (park[loc-1] == true) System.out.println((loc) + " 위치에 이미 주차되어있습니다.");
+					if (park[loc-1]) System.out.println((loc) + " 위치에 이미 주차되어있습니다.");
 					else {
 						System.out.println((loc) + " 위치에 입차");
 						park[loc-1] = true;
@@ -40,7 +39,7 @@ public class Parking {
 				case 2: 
 					System.out.println("위치 입력 : ");
 					loc = sc.nextInt();
-					if (park[loc-1] == true) {
+					if (park[loc-1]) {
 						System.out.println((loc) + " 위치에 출차");
 						park[loc-1] = false;
 					}
